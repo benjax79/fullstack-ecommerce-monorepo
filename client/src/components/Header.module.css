@@ -1,0 +1,67 @@
+.header {
+    display: grid;
+    grid-template-columns: minmax(150px,auto) auto auto auto auto ;
+    grid-template-rows: 1fr 1fr;
+    gap:5px
+    
+    
+}
+.logo{
+    border: 1px solid red;
+    background: red;
+    grid-row-start: 1;
+    grid-row-end: 3; 
+}
+.searcher{
+    border: 1px solid red;
+    background: blue;
+    grid-column-start: 2;
+    grid-column-end: 4; 
+}
+
+.home_button{
+    border: 1px solid red;
+    background: green;
+    grid-column-start: 2;
+    
+     
+    grid-row-start: 2;
+    grid-row-end: 3;
+    
+}
+
+.product_button{
+    border: 1px solid red;
+    background: yellow;
+    grid-column-start: 3;
+    grid-column-end: 4; 
+
+}
+
+.shopping_cart{
+    border: 1px solid red;
+    background: pink;
+    grid-column-start: 4;
+    grid-column-end: 5;
+     display: flex;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    justify-content: center;
+    align-items: center;
+    
+    
+    
+}
+
+.login{
+    border: 1px solid orange;
+    background: pink;
+    grid-column-start: 5;
+    grid-column-end: 6;
+    
+     
+    grid-row-start: 1;
+    grid-row-end: 3;
+    
+    
+}

@@ -1,12 +1,12 @@
 import express from 'express';
 import cors from 'cors';
-import pg from 'pg'; // Importamos todo el paquete
+import pg from 'pg'; 
 import dotenv from 'dotenv';
 
-// Configurar variables de entorno
-dotenv.config();
+// Configurar variables de entorno | Se carga variables de .env en process.env
+dotenv.config(); 
 
-// Desestructuramos Pool desde el paquete pg
+// Obtenemos clase Pool
 const { Pool } = pg;
 
 const app = express();
@@ -25,16 +25,16 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
-// Rutas
+// Endpoints
 app.get('/', (req, res) => {
-  res.send('¡El Backend está vivo y usando IMPORTS! 🚀');
+  res.send('Conexion a backend con exito');
 });
 
 app.get('/test-db', async (req, res) => {
   try {
     const result = await pool.query('SELECT NOW()');
     res.json({ 
-      mensaje: 'Conexión exitosa a Postgres', 
+      mensaje: 'Conexión exitosa a DB Postgres', 
       hora_servidor: result.rows[0].now 
     });
   } catch (err) {
