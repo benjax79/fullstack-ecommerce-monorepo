@@ -1,16 +1,28 @@
+div{
+    font-size: 5vw;
+}
+
 .header {
     display: grid;
-    grid-template-columns: minmax(150px,auto) auto auto auto auto ;
-    grid-template-rows: 1fr 1fr;
-    gap:5px
+    grid-template-columns: 150px min-content auto 100px 180px ;
+    grid-template-rows: auto auto;
+    gap:5px;
     
     
 }
 .logo{
-    border: 1px solid red;
-    background: red;
+    
     grid-row-start: 1;
-    grid-row-end: 3; 
+    grid-row-end: 3;
+    
+   
+     
+}
+.logo img{
+    width: 100%; 
+   
+    
+    
 }
 .searcher{
     border: 1px solid red;
@@ -27,33 +39,46 @@
      
     grid-row-start: 2;
     grid-row-end: 3;
+    border-radius: 30%;
     
 }
 
 .product_button{
-    border: 1px solid red;
-    background: yellow;
+    
+    
     grid-column-start: 3;
     grid-column-end: 4; 
+     border-radius: 30%;
 
 }
 
 .shopping_cart{
-    border: 1px solid red;
-    background: pink;
+    display: flex;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: 2px solid;
+    overflow: hidden;
     grid-column-start: 4;
     grid-column-end: 5;
-     display: flex;
+     
     grid-row-start: 1;
     grid-row-end: 3;
-    justify-content: center;
-    align-items: center;
+    
+    align-self: center;
     
     
+   
+    
+    
+}
+.shopping_cart img{
+    width: 100%;
     
 }
 
 .login{
+    border-radius: 50%;
+    display: flex;
     border: 1px solid orange;
     background: pink;
     grid-column-start: 5;
@@ -62,6 +87,9 @@
      
     grid-row-start: 1;
     grid-row-end: 3;
-    
+    font-size: 30px;
+    justify-content: center;
+    align-items: center;
     
 }
+

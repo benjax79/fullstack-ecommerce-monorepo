@@ -1,0 +1,19 @@
+.productCard{
+    border: solid 2px pink;
+    background-color: chocolate;
+}
+.productCard div {
+    margin-top: 20px;
+    width: 80%;
+    justify-self: center;
+    font-size: larger;
+    
+}
+
+.productCard div img {
+    width: 100%;
+}
+.productCard p {
+    font-size: 2vw;
+    justify-self: center;
+}
