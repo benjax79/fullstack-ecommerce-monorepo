@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Header from './components/Header/Header'
 import ProductsContainer from './components/ProductsContainer/ProductsContainer'
 import Filter from './components/Filter/Filter'
@@ -6,7 +6,7 @@ import Footer from './components/Footer/Footer'
 import ProductCard from './components/ProductCard/ProductCard'
 
 function App() {
-  
+  /*
 const productos = [
   {
     id: 1, 
@@ -28,9 +28,25 @@ const productos = [
     stock: 15 
   }
 ]
+*/
+const [product_list,setProductList] = useState([]);
+
+useEffect(  ()=>{
+  const query_ =  async() =>  {
+    const query = await fetch("http://localhost:3000/producto?limit=12&offset=0");
+    let resultado=  await query.json()
+    
+    setProductList(resultado)
+  }
+  query_();
+  
+  
+  
+},[])
+
 
   return(
-    <>
+    <div style={{backgroundColor:"pink"}}>
     <Header >
       
     </Header>
@@ -38,12 +54,12 @@ const productos = [
     <div style={{display:'flex'}}>
       <Filter></Filter>
 
-    <ProductsContainer productos={productos}>
+    <ProductsContainer productos={product_list} setProductList={setProductList}> 
     </ProductsContainer>
     </div>
     
     <Footer></Footer>
-    </>
+    </div>
   ) 
 }
 

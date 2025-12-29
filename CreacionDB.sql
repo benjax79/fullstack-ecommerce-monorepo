@@ -46,3 +46,5 @@ CREATE Table boleta_producto(
     Foreign Key (id_producto) REFERENCES producto(id_producto)
 )
 
+
+select * from producto

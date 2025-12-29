@@ -1,31 +1,18 @@
 .ProductsContainer{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: repeat(3,1fr);
+    
     border: solid 2px pink;
     gap: 5px;
-    width: 70%;
+    
     margin-top: 50px;
-   
-    
-    
-    
-}
-.ProductsContainer article{
-    border: solid 2px pink;
-    background-color: chocolate;
-}
-.ProductsContainer div {
-    width: 80%;
-    justify-self: center;
-    font-size: larger;
-    
 }
 
-.ProductsContainer div img {
-    width: 100%;
-}
-.ProductsContainer p {
-    font-size: 2vw;
+.buttons{
+    display: flex;
     justify-self: center;
+    gap: 10px;
+    margin-top: 10px;
+    
 }

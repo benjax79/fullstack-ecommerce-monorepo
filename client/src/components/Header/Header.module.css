@@ -6,7 +6,9 @@ div{
     display: grid;
     grid-template-columns: 150px min-content auto 100px 180px ;
     grid-template-rows: auto auto;
-    gap:5px;
+    gap:40px;
+    background-color: palevioletred
+
     
     
 }
@@ -25,21 +27,21 @@ div{
     
 }
 .searcher{
-    border: 1px solid red;
-    background: blue;
+    
+    
     grid-column-start: 2;
     grid-column-end: 4; 
 }
 
 .home_button{
-    border: 1px solid red;
-    background: green;
+    
+    
     grid-column-start: 2;
     
      
     grid-row-start: 2;
     grid-row-end: 3;
-    border-radius: 30%;
+    
     
 }
 
