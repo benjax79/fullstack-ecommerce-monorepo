@@ -5,7 +5,7 @@ function Footer (){
         <footer>
             <p>Copyrigth 2026</p>
             <div className={style.container}>
-                <p className={style.contacto}>Contactamne</p>
+                <p className={style.contacto}>Contactame</p>
                 <p className={style.inicio}>Voler al inicio</p>
             </div>
         </footer>

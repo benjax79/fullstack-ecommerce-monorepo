@@ -1,7 +1,8 @@
 import styles from "./Header.module.css"
 import logo from "../../assets/logo.png"
 import cart from "../../assets/shoppingCartImg.png"
-function Header(){
+import Searcher from "../Searcher/Searcher.jsx"
+function Header({handlerSearchOnSubmit}){
 
 
 
@@ -10,7 +11,9 @@ function Header(){
             <div className={styles.logo}>
                 <img  src={logo} alt="Logo image" />
             </div>
-            <div className={styles.searcher}>buscador: </div>
+            <div className={styles.searcher}>
+                <Searcher {...{handlerSearchOnSubmit}} ></Searcher>
+            </div>
             <div className={styles.home_button}>Inicio</div>
             <div className={styles.product_button}>Productos</div>
             <div className={styles.shopping_cart}>

@@ -6,7 +6,7 @@ import style from "./ProductCard.module.css"
 
 
 function ProductCard(props){
-    const {precio,imagen,stock} = props;
+    const {precio,imagen,stock,nombre} = props;
     const [stock_,setStock] = useState(stock);
 
     
@@ -24,6 +24,7 @@ function ProductCard(props){
                 <div> 
                     <img src={imagen} alt="maquillaje" />
                 </div>
+                <p>{nombre}</p>
                 <p>Precio: {precio}</p>
                 <p>Cantidad: {stock_}</p>
                 <button onClick={handleClick} style={{display:"block",justifySelf:"center"}}>Agregar al carrito</button>

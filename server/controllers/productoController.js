@@ -22,3 +22,17 @@ export const getGroupedItems = async (req,res) =>{
     
     
 }
+
+export const getSearchedItems = async (req,res) => {
+    try{
+        let {petition,limit,offset} = req.query;
+        petition= `%${petition}%`;
+
+        const query =  await pool.query("SELECT id_producto,nombre,precio,stock,imagen FROM producto WHERE nombre ilike $3 ORDER BY precio LIMIT $1 OFFSET $2",[limit,offset,petition]);
+        const result = query.rows;
+        res.json(result);
+    }
+    catch(error){
+        res.send(console.error("Error terrible"),error)
+    }
+}
