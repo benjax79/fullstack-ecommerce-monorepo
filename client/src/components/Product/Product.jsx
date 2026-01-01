@@ -1,0 +1,71 @@
+import { useEffect, useState } from "react";
+import style from "./Product.module.css"
+import { useParams } from "react-router-dom"
+
+
+
+
+
+function Product(){
+    let Params = useParams();
+    let {id}= Params;
+   
+
+    const [producto,setProducto]= useState(null);
+    
+    const loadProduct = async() =>{
+        const data = await fetch(`http://localhost:3000/producto/${id}`);
+        const resultado= await data.json();
+       
+        setProducto(resultado);
+    }
+   
+
+    useEffect( () =>{
+        loadProduct();
+    },[id] )
+
+    if(!producto){
+        return <p>cargando</p>
+    }
+
+
+
+
+    return(
+        <article className={style.article}>
+            
+            <div className={style.contentLeft}>
+                <div className={style.image}>
+                    <img src={producto.imagen}></img> 
+                </div>
+
+
+                <details className={style.description}>
+                <summary>Descripcion</summary>
+                <p>{producto.descripcion}</p>
+                </details>
+                <details className={style.specs}>
+                    <summary>Especificaciones</summary>
+               
+                </details>
+            </div>
+
+            <div className={style.contentRigth}>
+                <p>{`Nombre: ${producto.nombre}`}</p>
+                <p>Marca:</p>
+                <p>{`Precio:${producto.precio}`}</p>
+                <p>{`Stock disponible: ${producto.stock}`}</p>
+                <p>{`Color: ${producto.color}`} </p>
+                <div >Cantidad</div>
+                <div className={style.comprar_ahora}>Comprar ahora</div>
+                <div>Agregar al carrito</div>
+                
+            </div>
+
+
+        </article>
+    )
+}
+
+export default Product

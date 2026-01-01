@@ -2,6 +2,12 @@
     border: solid 2px pink;
     background-color: palevioletred;
 }
+
+.productCard:hover{
+    transform: scale(1.08);
+    box-shadow: 0 2px 12px 0 #ffb6d5aa;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
 .productCard div {
     margin-top: 20px;
     width: 70%;
@@ -20,3 +26,4 @@
     font-size: 2vw;
     justify-self: center;
 }
+

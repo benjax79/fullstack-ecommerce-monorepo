@@ -1,6 +1,7 @@
 import style from "./ProductsContainer.module.css"
 import ProductCard from "../ProductCard/ProductCard"
-import { usePagination } from "../../hooks/usePagination.js"
+import { Link } from "react-router-dom"
+
 
 
 
@@ -17,7 +18,7 @@ function ProductsContainer( {adelanteButtonIsDisabled,atrasButtonIsDisabled,hand
         <div>
         <section className= {style.ProductsContainer}>
             
-            {productos.map(({id_producto,...parametros}) =>  <ProductCard key={id_producto} {...parametros}></ProductCard> )}
+            {productos.map(({id_producto,...parametros}) => <Link to= {`/producto/${id_producto}`}>  <ProductCard key={id_producto} {...parametros}></ProductCard></Link> )}
             
                 
             

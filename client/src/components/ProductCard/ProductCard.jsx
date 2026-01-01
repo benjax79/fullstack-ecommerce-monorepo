@@ -7,17 +7,11 @@ import style from "./ProductCard.module.css"
 
 function ProductCard(props){
     const {precio,imagen,stock,nombre} = props;
-    const [stock_,setStock] = useState(stock);
+   
+    
 
     
-    const handleClick =(event) =>{
-        if (stock_>0){
-            setStock(stock_-1)
-        }
-        else{
-            alert("Producto sin stock")
-        }
-    }
+   
 
     return(
         <article className={style.productCard}>
@@ -26,8 +20,8 @@ function ProductCard(props){
                 </div>
                 <p>{nombre}</p>
                 <p>Precio: {precio}</p>
-                <p>Cantidad: {stock_}</p>
-                <button onClick={handleClick} style={{display:"block",justifySelf:"center"}}>Agregar al carrito</button>
+                <p>Cantidad: {stock}</p>
+                <button  style={{display:"block",justifySelf:"center"}}>Ver producto</button>
             </article>
     )
 }

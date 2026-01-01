@@ -1,30 +1,34 @@
-import { useEffect, useState } from 'react'
-import Header from './components/Header/Header'
-import ProductsContainer from './components/ProductsContainer/ProductsContainer'
-import Filter from './components/Filter/Filter'
-import Footer from './components/Footer/Footer'
-import ProductCard from './components/ProductCard/ProductCard'
-import { usePagination } from './hooks/usePagination.js'
+import {BrowserRouter,Route,Routes} from "react-router-dom" 
+import ProductsPage from './Pages/ProductsPage/ProductsPage.jsx'
+import Layout from './components/Layout/Layout.jsx'
+import HomePage from "./Pages/HomePage/HomePage.jsx"
+import ProductPage from "./Pages/ProductPage/ProductPage.jsx"
+
+
 function App() {
 
-  const {adelanteButtonIsDisabled,atrasButtonIsDisabled,handlerAdelanteButtonClick,handlerAtrasButtonClick,productos,handlerSearchOnSubmit} = usePagination();
+  
 
   return(
-    <div style={{backgroundColor:"pink"}}>
-    <Header {...{handlerSearchOnSubmit}} >
-      
-    </Header>
 
-    <div style={{display:'flex'}}>
-      <Filter></Filter>
+    <BrowserRouter>
+      <Routes >
 
-    <ProductsContainer {...{adelanteButtonIsDisabled,atrasButtonIsDisabled,handlerAdelanteButtonClick,handlerAtrasButtonClick,productos}}> 
-    </ProductsContainer>
-    </div>
+        <Route  path='/' element={<Layout/>} >
+
+
+          <Route index element={<HomePage/>}/>
+          <Route path="/productos" element={<ProductsPage/>}/>
+          <Route path="/producto/:id"  element={<ProductPage/>}/> 
+          
+
+        </Route>
+
+      </Routes>
     
-    <Footer></Footer>
     
-    </div>
+    </BrowserRouter>
+    
   ) 
   
 }

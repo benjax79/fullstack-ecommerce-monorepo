@@ -16,3 +16,9 @@
     margin-top: 10px;
     
 }
+a{
+    display: flex;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}

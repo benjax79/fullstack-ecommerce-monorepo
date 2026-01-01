@@ -1,22 +1,27 @@
 import { useState ,useEffect} from "react";
-
+import { useSearchParams } from "react-router-dom";
 
 
 export const usePagination = () => {
-
-    const [textToSearch,setTextToSearch] = useState("");
+    
+    
     const [productos,setProductos] = useState([]);
     const [offset,setoffset] = useState(0);
     const [atrasButtonIsDisabled,setAtrasButtonIsDisabled] = useState(true);
     const [adelanteButtonIsDisabled,setAdelanteButtonIsDisabled] = useState(false);
     const LIMIT =12;
-    
+    const [urlSearchParams]= useSearchParams()
+    const searchParam= urlSearchParams.get("search");
+
     useEffect(  ()=>{
       cargarProductos(0);
-      
-      
-      
-    },[])
+    },[]);
+
+    useEffect( () =>{
+        cargarProductos(0,searchParam)
+
+    },[searchParam] );
+
     
     const cargarProductos=  async(newOffSet,textToSearch="")=>{
         try{
@@ -57,29 +62,22 @@ export const usePagination = () => {
 
     const handlerAdelanteButtonClick = () => {
         const newOffSet=offset+LIMIT
-        cargarProductos(newOffSet,textToSearch);
+        cargarProductos(newOffSet,searchParam);
         setoffset(newOffSet);
     }
     const handlerAtrasButtonClick = () => {
         const newOffSet=offset-LIMIT
-        cargarProductos(newOffSet,textToSearch);
+        cargarProductos(newOffSet,searchParam);
         setoffset(newOffSet);
     }
 
-    const handlerSearchOnSubmit=(event)=>{
-        const valor= event.target.value;
-        
-        setTextToSearch(valor);
-        setoffset(0);
-        cargarProductos(0,valor);
-    }
+    
 
 
 
     return {
             handlerAtrasButtonClick,
             handlerAdelanteButtonClick,
-            handlerSearchOnSubmit,
             atrasButtonIsDisabled,
             adelanteButtonIsDisabled,
             productos

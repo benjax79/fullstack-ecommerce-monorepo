@@ -22,7 +22,7 @@ INSERT INTO producto (nombre, categoria, color, stock, precio, descripcion, imag
 ('Corrector Ojeras', 'Rostro', 'Natural', 30, 11000, 'Corrector alta cobertura iluminador', 'https://images.unsplash.com/photo-1617897903246-719242758050?w=400'),
 ('Lápiz de Cejas', 'Cejas', 'Castaño', 60, 5500, 'Lápiz retráctil para definir cejas', 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=400'),
 ('Iluminador en Polvo', 'Rostro', 'Dorado', 28, 13500, 'Iluminador para pómulos y arco de cupido', 'https://images.unsplash.com/photo-1567721913486-6585f069b332?w=400'),
-('Primer Facial', 'Rostro', 'Transparente', 22, 16500, 'Primer hidratante para preparar la piel', 'https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=400')
+('Primer Facial', 'Rostro', 'Transparente', 22, 16500, 'Primer hidratante para preparar la piel', 'https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=400'),
 ('Labial Líquido Mate', 'Labios', 'Borgoña', 45, 9500, 'Labial líquido de larga duración 24hrs', 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400'),
 ('Labial Cremoso', 'Labios', 'Coral', 38, 7800, 'Labial hidratante con vitamina E', 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400'),
 ('Delineador de Labios', 'Labios', 'Nude', 60, 4500, 'Lápiz delineador cremoso para contorno', 'https://images.unsplash.com/photo-1599948128020-9a44505b0d1b?w=400'),

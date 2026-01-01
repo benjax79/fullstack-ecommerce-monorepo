@@ -37,12 +37,16 @@ div{
     
     
     grid-column-start: 2;
-    
+    grid-column-end: 3;
      
     grid-row-start: 2;
     grid-row-end: 3;
     
-    
+
+}
+
+.home_button i{
+    display: inline-block;
 }
 
 .product_button{
@@ -50,8 +54,14 @@ div{
     
     grid-column-start: 3;
     grid-column-end: 4; 
-     border-radius: 30%;
+    grid-row-start: 2;
+    grid-row-end: 3;
 
+    border-radius: 30%;
+
+}
+.product_button p{
+    display: inline-block;
 }
 
 .shopping_cart{
@@ -95,3 +105,16 @@ div{
     
 }
 
+
+a {
+    text-decoration: none;
+    color: inherit;
+    
+}
+
+.home_button p:hover,
+.product_button p:hover {
+    transform: scale(1.08);
+    box-shadow: 0 2px 12px 0 #ffb6d5aa;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
