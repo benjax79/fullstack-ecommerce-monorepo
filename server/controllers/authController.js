@@ -42,11 +42,11 @@ export const login = async (req,res) => {
         const hashedDbPassword = data.rows[0].password;
         const {nombre,id_cliente}=data.rows[0];
 
-        const isValid = bscrypt.compare(password,hashedDbPassword);
+        const isValid = await bscrypt.compare(password,hashedDbPassword);
 
         if(isValid){
             const payload= {"nombre":nombre,"id_cliente":id_cliente,"email":email}
-            const token = jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:"1h"});
+            const token = jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:"7d"});
             return res.status(200).json({token,user:{...payload}})
         }
         else{
