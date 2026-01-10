@@ -3,9 +3,14 @@ import logo from "../../assets/logo.png"
 import cart from "../../assets/shoppingCartImg.png"
 import Searcher from "../Searcher/Searcher.jsx"
 import { Link } from "react-router-dom"
+import { useAuth } from "../../context/AuthContext.jsx";
 
 function Header(){
 
+    const {user}=useAuth();
+    let loginText;
+   
+    
 
 
     return (
@@ -21,7 +26,7 @@ function Header(){
             <div className={styles.shopping_cart}>
                 <img  src={cart} alt="shopping cart image" />
             </div>
-            <div className={styles.login}>Iniciar sesion</div>
+            <Link to="/sesion"><div className={styles.login}>{user ?`Bienvenido ${user.nombre}`: loginText=`Iniciar sesion`}</div></Link>
             
         </header>
     )

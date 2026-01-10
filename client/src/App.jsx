@@ -3,6 +3,8 @@ import ProductsPage from './Pages/ProductsPage/ProductsPage.jsx'
 import Layout from './components/Layout/Layout.jsx'
 import HomePage from "./Pages/HomePage/HomePage.jsx"
 import ProductPage from "./Pages/ProductPage/ProductPage.jsx"
+import LoginPage from "./Pages/LoginPage/LoginPage.jsx";
+
 
 
 function App() {
@@ -19,7 +21,9 @@ function App() {
 
           <Route index element={<HomePage/>}/>
           <Route path="/productos" element={<ProductsPage/>}/>
-          <Route path="/producto/:id"  element={<ProductPage/>}/> 
+          <Route path="/producto/:id"  element={<ProductPage/>}/>
+          <Route path="/sesion" element={<LoginPage/>}/>
+          
           
 
         </Route>

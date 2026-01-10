@@ -1,0 +1,47 @@
+.article {
+    background-color: thistle;
+    display: flex;
+    font-size: 2vw;
+    flex-direction: column;
+    margin-left: 40%;
+    margin-right: 40%;
+    margin-top: 10vh;
+    gap:8px;
+    border-color: papayawhip;
+    border-style: solid;
+    border-radius: 10%;
+    padding: 5px 5px;
+    
+    
+    
+}
+.form{
+    display: flex;
+    flex-direction: column;
+}
+.article label{
+    margin:  0 auto;
+}
+.article :nth-child(5){
+    width: 30%;
+    align-self: center;
+    margin-top: 10%;
+    }
+
+.errorMessage{
+    margin-top: 3vw;
+    color:red;
+    font-size: 5vw;
+    text-align: center;
+    
+   
+}
+
+.closeSession{
+    display: block;
+    margin-top: 10vw;
+    
+    font-size: 6vw;
+    margin-left: auto;
+    margin-right: auto;
+}
