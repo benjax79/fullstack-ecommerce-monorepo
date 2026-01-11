@@ -2,7 +2,7 @@ CREATE Table cliente(
     id_cliente serial PRIMARY KEY,
     nombre VARCHAR(50),
     apellido VARCHAR(50),
-    correo VARCHAR(100) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR (255) not NULL,
     creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -45,6 +45,7 @@ CREATE Table boleta_producto(
     Foreign Key (id_boleta) REFERENCES boleta(id_boleta) ON DELETE CASCADE,
     Foreign Key (id_producto) REFERENCES producto(id_producto)
 )
+
 
 
 select * from producto

@@ -2,7 +2,7 @@
 TRUNCATE TABLE boleta_producto, cliente_producto, boleta, producto, cliente RESTART IDENTITY CASCADE;
 
 -- Insertar clientes
-INSERT INTO cliente (nombre, apellido, correo, password) VALUES
+INSERT INTO cliente (nombre, apellido, email, password) VALUES
 ('Juan', 'Pérez', 'juan.perez@email.com', '$2b$10$examplehash1'),
 ('María', 'González', 'maria.gonzalez@email.com', '$2b$10$examplehash2'),
 ('Carlos', 'Rodríguez', 'carlos.rodriguez@email.com', '$2b$10$examplehash3'),
@@ -108,3 +108,5 @@ INSERT INTO boleta_producto (id_boleta, id_producto, precio_unidad, cantidad) VA
 select * from producto limit 3 OFFSET 2
 
 SELECT id_producto,nombre,precio,stock,imagen FROM producto WHERE nombre ILIKE '%rubor%'  LIMIT 12 OFFSET 0
+
+SELECT * FROM cliente;
