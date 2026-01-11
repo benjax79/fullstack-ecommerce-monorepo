@@ -4,7 +4,7 @@ import Layout from './components/Layout/Layout.jsx'
 import HomePage from "./Pages/HomePage/HomePage.jsx"
 import ProductPage from "./Pages/ProductPage/ProductPage.jsx"
 import LoginPage from "./Pages/LoginPage/LoginPage.jsx";
-
+import CarritoPage from "./Pages/CarritoPage/CarritoPage.jsx"
 
 
 function App() {
@@ -23,6 +23,7 @@ function App() {
           <Route path="/productos" element={<ProductsPage/>}/>
           <Route path="/producto/:id"  element={<ProductPage/>}/>
           <Route path="/sesion" element={<LoginPage/>}/>
+          <Route path="/carrito" element={<CarritoPage/>} />
           
           
 

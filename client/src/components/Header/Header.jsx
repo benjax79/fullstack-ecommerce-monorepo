@@ -23,9 +23,11 @@ function Header(){
             </div>
             <div className={styles.home_button}><Link to="/"><p>Inicio</p></Link></div>
             <div className={styles.product_button}> <Link to="/productos"><p >Productos</p></Link></div>
-            <div className={styles.shopping_cart}>
-                <img  src={cart} alt="shopping cart image" />
-            </div>
+            <Link to="/carrito">
+                <div className={styles.shopping_cart}>
+                    <img  src={cart} alt="shopping cart image" />
+                </div>
+            </Link>
             <Link to="/sesion"><div className={styles.login}>{user ?`Bienvenido ${user.nombre}`: loginText=`Iniciar sesion`}</div></Link>
             
         </header>
