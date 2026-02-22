@@ -6,17 +6,19 @@ import ProductCartItem from "../ProductCartItem/ProductCartItem.jsx";
 
 
 function ProductCartList({productsCart}){
+
     
+    const lista=productsCart.map( ({id_producto:Key,...others}) =>{  
+                return <ProductCartItem key={Key} {...others}/>
+                  
+    })
+
     
     
 
     return(
         <article className={style.article}>
-            {productsCart.map( ({id_producto:Key,...others}) =>(
-                  <ProductCartItem Key={Key} {...others}/>
-            ))}
-
-
+            {lista}
         </article>
 
     )

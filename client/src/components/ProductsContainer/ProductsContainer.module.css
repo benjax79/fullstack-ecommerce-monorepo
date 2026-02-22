@@ -1,12 +1,14 @@
 .ProductsContainer{
     display: grid;
     grid-template-columns: repeat(4,1fr);
-    grid-template-rows: repeat(3,1fr);
-    
+    grid-auto-rows: auto;
+   
     border: solid 2px pink;
     gap: 5px;
     
     margin-top: 50px;
+    margin-left: 8vw;
+    
 }
 
 .buttons{

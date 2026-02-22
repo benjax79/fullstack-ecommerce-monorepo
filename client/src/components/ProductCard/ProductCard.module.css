@@ -1,6 +1,11 @@
 .productCard{
     border: solid 2px pink;
     background-color: palevioletred;
+    display: flex;
+    flex-direction: column;
+    max-width: 15vw;
+    text-align: center;
+
 }
 
 .productCard:hover{
@@ -9,11 +14,13 @@
     transition: transform 0.2s, box-shadow 0.2s;
 }
 .productCard div {
-    margin-top: 20px;
-    width: 70%;
     
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 20px;
     justify-self: center;
-    font-size: larger;
+
+    
     
 }
 
@@ -21,9 +28,21 @@
     width: 100%;
     aspect-ratio: 1/1;
     object-fit: cover;
+    
+    
 }
 .productCard p {
     font-size: 2vw;
     justify-self: center;
+    flex:1
 }
 
+.productCard p:nth-child(2) {
+    flex: 2
+}
+.productCard button{
+    align-self: center;
+    border-radius: 5px;
+    font-size: 2vh;
+    margin-bottom: 5px;
+}

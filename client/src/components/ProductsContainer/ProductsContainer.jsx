@@ -15,7 +15,7 @@ function ProductsContainer( {adelanteButtonIsDisabled,atrasButtonIsDisabled,hand
 
     return(
         
-        <div>
+        <div >
         <section className= {style.ProductsContainer}>
             
             {productos.map(({id_producto,...parametros}) => <Link to= {`/producto/${id_producto}`}>  <ProductCard key={id_producto} {...parametros}></ProductCard></Link> )}

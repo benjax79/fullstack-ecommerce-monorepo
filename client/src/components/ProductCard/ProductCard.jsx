@@ -18,7 +18,7 @@ function ProductCard(props){
                 <div> 
                     <img src={imagen} alt="maquillaje" />
                 </div>
-                <p>{nombre}</p>
+                <p >{nombre}</p>
                 <p>Precio: {precio}</p>
                 <p>Cantidad: {stock}</p>
                 <button  style={{display:"block",justifySelf:"center"}}>Ver producto</button>
