@@ -1,6 +1,11 @@
 import style from "./productCartItem.module.css"
 
-function ProductCartItem({nombre,cantidad,precio,imagen}){
+function ProductCartItem({nombre,cantidad,precio,imagen,id_producto,eliminarProductoCarrito}){
+
+    
+
+
+    
     return (
         <div className={style.container}>
             <img src={imagen} alt="imagen producto en carrito" />
@@ -12,6 +17,9 @@ function ProductCartItem({nombre,cantidad,precio,imagen}){
             <div>
             <p>Total</p>
             <p>{precio*cantidad}</p>
+            </div>
+            <div>
+                <div onClick={()=>eliminarProductoCarrito(id_producto)} className={style.eliminar}> Eliminar</div>
             </div>
         </div>
     )

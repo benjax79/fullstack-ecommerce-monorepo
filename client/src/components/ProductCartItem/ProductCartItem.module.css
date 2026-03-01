@@ -28,3 +28,12 @@
     text-align: center;
 }
 
+.eliminar {
+    background-color: red;
+}
+
+.eliminar:hover{
+  transform: translateY(-5px) scale(1.02); /* Sube 5px y crece un 2% */
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2); /* Sombra más profunda */
+  cursor: pointer;
+}

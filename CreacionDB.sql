@@ -49,3 +49,7 @@ CREATE Table boleta_producto(
 
 
 select * from producto
+
+
+
+

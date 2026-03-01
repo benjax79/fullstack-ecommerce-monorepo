@@ -29,7 +29,31 @@ function Product(){
         return <p>cargando</p>
     }
 
+    const agregarAlCarrito = async() => {
+        try{
+        const datos= JSON.parse(localStorage.getItem("user"));
+        const response = await fetch("http://localhost:3000/carrito/agregarAlCarrito",{
+            method: "POST",
+            headers:{
+                "content-type":"application/json"
+            },
+            body: JSON.stringify({
+                id_cliente:datos.id_cliente,
+                id_producto:id,
+                cantidad:1
 
+            })
+        })
+        if (!response.ok){
+            throw new Error(`Error en la petición: ${response.status}`);
+        }
+        }
+        catch (e) {
+            console.error("Error al agregar al carrito",e)
+        }
+
+        
+    }
 
 
     return(
@@ -59,7 +83,8 @@ function Product(){
                 <p>{`Color: ${producto.color}`} </p>
                 <div >Cantidad</div>
                 <div className={style.comprar_ahora}>Comprar ahora</div>
-                <div>Agregar al carrito</div>
+                <div className={style.agregarAlCarrito} onClick={agregarAlCarrito}>Agregar al carrito</div>
+                
                 
             </div>
 

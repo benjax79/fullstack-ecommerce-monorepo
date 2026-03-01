@@ -6,6 +6,36 @@ import CartSummary from "../../components/CartSummary/CartSummary.jsx"
 function CarritoPage(){
     
     const [productsCart,setProductCart] = useState([]);
+
+
+    const eliminarProductoCarrito = async(id_producto) => {
+        try{ 
+            const id_cliente = JSON.parse(localStorage.getItem("user")).id_cliente
+            const response = await fetch("http://localhost:3000/carrito/eliminarDeCarrito",{
+            method: "POST",
+            headers:{
+                "content-type":"application/json"
+            },
+            body: JSON.stringify({
+                id_cliente:id_cliente,
+                id_producto:id_producto
+               
+
+            })
+            
+        })
+        if (!response.ok){
+            throw new Error(`Error en la petición de eliminacion del carrito: ${response.status}`);
+        }
+        const filtraje= productsCart.filter( (producto) => producto.id_producto !==id_producto)
+        setProductCart(filtraje)
+        }
+        catch (e) {
+            console.error("Error al eliminar de carrito",e)
+        }
+    } 
+
+    
     let amount=0;
     let totalPrice=0;
     const getCartProducts = async(id_cliente)=>{
@@ -38,9 +68,9 @@ function CarritoPage(){
         
         
         <section className= {style.section} >
-            <ProductCartList productsCart={productsCart}/>
+            <ProductCartList  eliminarProductoCarrito={eliminarProductoCarrito}   productsCart={productsCart}/>
             <div >
-                <CartSummary {...{amount,totalPrice}}/>
+                <CartSummary productsCart={productsCart} setProductCart={setProductCart} {...{amount,totalPrice}}/>
             </div>
 
 
