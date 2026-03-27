@@ -39,8 +39,10 @@ function CartSummary ({productsCart,amount,totalPrice,setProductCart}){
             }
             
             const result = await response.text();
+            
+            alert("Compra exitosa")
             console.log("Compra exitosa:", result);
-            setProductCart([]);
+            setProductCart([])
         } catch (error) {
             console.error("Error al procesar la compra:", error);
             alert("Hubo un error al procesar la compra. Por favor intenta de nuevo.");

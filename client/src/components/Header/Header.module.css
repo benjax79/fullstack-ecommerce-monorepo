@@ -100,8 +100,8 @@ div{
     grid-row-start: 1;
     grid-row-end: 3;
     font-size: 30px;
-    justify-content: center;
     align-items: center;
+    text-align: center;
     
 }
 

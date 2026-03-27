@@ -47,7 +47,7 @@ function CarritoPage(){
     }
     productsCart.forEach( ({precio, cantidad}) => {
         amount+=cantidad;
-        totalPrice+=precio;
+        totalPrice+=precio*cantidad;
     })
 
     useEffect( ()=>{

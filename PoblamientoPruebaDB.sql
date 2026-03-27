@@ -110,3 +110,6 @@ select * from producto limit 3 OFFSET 2
 SELECT id_producto,nombre,precio,stock,imagen FROM producto WHERE nombre ILIKE '%rubor%'  LIMIT 12 OFFSET 0
 
 SELECT * FROM cliente;
+select * from producto;
+
+select * from cliente_producto

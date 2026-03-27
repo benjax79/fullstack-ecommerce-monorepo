@@ -12,26 +12,38 @@ function Product(){
    
 
     const [producto,setProducto]= useState(null);
-    
+    const [addProductNotification,setAddProductNotification ] = useState(false)
     const loadProduct = async() =>{
         const data = await fetch(`http://localhost:3000/producto/${id}`);
         const resultado= await data.json();
        
         setProducto(resultado);
     }
+
+    
    
 
     useEffect( () =>{
         loadProduct();
     },[id] )
 
+    useEffect( ()=> {
+        if(addProductNotification){
+        setTimeout(() => {
+            setAddProductNotification(false)
+        }, 5000);
+        }
+    },[addProductNotification] )
+
     if(!producto){
         return <p>cargando</p>
     }
 
+
     const agregarAlCarrito = async() => {
         try{
         const datos= JSON.parse(localStorage.getItem("user"));
+
         const response = await fetch("http://localhost:3000/carrito/agregarAlCarrito",{
             method: "POST",
             headers:{
@@ -44,14 +56,17 @@ function Product(){
 
             })
         })
+
         if (!response.ok){
             throw new Error(`Error en la petición: ${response.status}`);
         }
+        setAddProductNotification(true);
+
         }
         catch (e) {
             console.error("Error al agregar al carrito",e)
         }
-
+        
         
     }
 
@@ -84,7 +99,7 @@ function Product(){
                 <div >Cantidad</div>
                 <div className={style.comprar_ahora}>Comprar ahora</div>
                 <div className={style.agregarAlCarrito} onClick={agregarAlCarrito}>Agregar al carrito</div>
-                
+                { addProductNotification && <div>Producto agregado al carro</div>  }
                 
             </div>
 

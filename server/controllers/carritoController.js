@@ -2,13 +2,19 @@ import { pool } from "../config/db.js"
 
 export const agregarAlCarrito = async(req,res)=>{
     try{
-        const {id_cliente,id_producto,cantidad}= await req.body;
-        await pool.query("INSERT INTO cliente_producto (id_cliente,id_producto,cantidad) values ($1,$2,$3)",[id_cliente,id_producto,cantidad])
-        res.send("Exito en la operacion")
+        const { id_cliente, id_producto, cantidad = 1 } = req.body;
+        await pool.query(
+            `INSERT INTO cliente_producto (id_cliente, id_producto, cantidad)
+             VALUES ($1, $2, $3)
+             ON CONFLICT (id_cliente, id_producto)
+             DO UPDATE SET cantidad = cliente_producto.cantidad + EXCLUDED.cantidad`,
+            [id_cliente, id_producto, cantidad]
+        );
+        res.status(200).send("Exito en la operacion")
     }   
     
     catch(error){
-        res.send("Fallo al agregar al carrito")
+        res.status(500).send("Fallo al agregar al carrito")
         console.error("Error al agregar carrito",error)
     }
 }

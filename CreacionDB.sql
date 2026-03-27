@@ -30,7 +30,7 @@ CREATE Table boleta(
     id_cliente INT NOT NULL,
     descuento INT DEFAULT 0 CHECK(descuento >= 0),
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP not null,
-    precio_total int not NULL CHECK(precio_total >= 0),
+    precio_total int not NULL CHECK(precio_total > 0),
     direccion_envio text,
     estado VARCHAR (20) DEFAULT 'PENDIENTE',
     metodo_pago VARCHAR(20),
@@ -48,7 +48,7 @@ CREATE Table boleta_producto(
 
 
 
-select * from producto
+select * from boleta where id_cliente=19
 
 
 
