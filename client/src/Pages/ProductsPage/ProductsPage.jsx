@@ -11,7 +11,7 @@ function ProductsPage(){
     const {adelanteButtonIsDisabled,atrasButtonIsDisabled,handlerAdelanteButtonClick,handlerAtrasButtonClick,productos} = usePagination();
     return (
     <div style={{display:'flex'}}>
-      <Filter></Filter>
+      <Filter ></Filter>
         <ProductsContainer {...{adelanteButtonIsDisabled,atrasButtonIsDisabled,handlerAdelanteButtonClick,handlerAtrasButtonClick,productos}}> 
         </ProductsContainer>
     </div>

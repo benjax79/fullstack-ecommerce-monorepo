@@ -13,3 +13,28 @@
 .filter p {
 font-size: 2vw;
 }
+
+.precio_maximo{
+    width: 80%;
+    margin-top: 1vh;
+    margin-bottom: 1vw;
+    display: flex;
+    flex-direction: column;
+    
+}   
+.precio_maximo p{
+    
+    text-align: center;
+}
+
+.lista {
+    font-size: 2vw;
+    list-style: none;
+    cursor: pointer;
+    
+}
+
+.titulo_lista{
+    font-size: 2vw;
+    
+}

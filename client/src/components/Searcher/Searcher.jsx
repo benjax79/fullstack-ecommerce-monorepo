@@ -5,9 +5,10 @@ import style from "./Searcher.module.css"
 
 function Searcher(){
 
-    const navigation = useNavigate()
-    const timerRef = useRef(null)
+    const navigation = useNavigate();
 
+    const timerRef = useRef(null)
+    
     // Limpieza de componente
     useEffect( ()=> {
         return () => {
@@ -28,6 +29,7 @@ function Searcher(){
         <div >    
         <input className={style.searcher}  onChange={writeOnNavegator} type="text" placeholder="Escriba lo que desee buscar ..."/>
         </div>
+        
     )
 }
 
