@@ -1,6 +1,8 @@
-.section{
+﻿.section {
     display: flex;
     flex-direction: row;
-    margin-top: 10vh;
-    gap: 10vw;
+    margin: 50px auto;
+    max-width: 1200px;
+    gap: 40px;
+    padding: 0 20px;
 }

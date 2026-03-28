@@ -1,27 +1,28 @@
-.container{
+﻿.container {
     display: flex;
-    
-   
+    width: 100%;
 }
-footer{
+footer {
     display: flex;
     justify-content: space-between;
-    background-color: antiquewhite;
-    height: 5vw;
+    background-color: var(--card-bg);
+    width: 100%;
+    padding: 20px 40px;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 50px;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.03);
+    border-top: 1px solid var(--primary-light);
 }
-
-
-footer p{
-    
-    font-size: 2vw;
-
+footer p {
+    font-size: 1rem;
+    color: var(--text-muted);
 }
-
-.contacto{
-    margin-right: 30px;
+.contacto, .inicio {
+    margin: 0 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
 }
-.inicio{
-    margin-right: 10px;
+.contacto:hover, .inicio:hover {
+    color: var(--primary);
 }

@@ -1,40 +1,74 @@
-.filter{
+﻿.filter {
     display: flex;
     flex-direction: column;
-    width: 25%;
-    align-items: center;
+    width: 280px;
+    min-width: 250px;
+    align-items: flex-start;
     margin-top: 50px;
-    background-color: palevioletred;
+    background-color: var(--card-bg);
     margin-right: 20px;
     margin-left: 20px;
-    max-width: 20%;
-    margin-left: 2vw;
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    height: fit-content;
 }
 .filter p {
-font-size: 2vw;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--primary-light);
+    padding-bottom: 5px;
+    width: 100%;
 }
-
-.precio_maximo{
-    width: 80%;
-    margin-top: 1vh;
-    margin-bottom: 1vw;
+.precio_maximo {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
-    
-}   
-.precio_maximo p{
-    
-    text-align: center;
 }
-
+.precio_maximo p {
+    text-align: left;
+    font-size: 1rem;
+    border: none;
+    margin-bottom: 8px;
+}
+.precio_maximo input {
+    padding: 10px 15px;
+    border: 2px solid #eee;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: var(--transition);
+}
+.precio_maximo input:focus {
+    border-color: var(--primary);
+}
+details {
+    width: 100%;
+    margin-bottom: 15px;
+}
+.titulo_lista {
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text-main);
+    padding: 8px 0;
+}
 .lista {
-    font-size: 2vw;
+    font-size: 1rem;
     list-style: none;
     cursor: pointer;
-    
+    padding: 8px 15px;
+    margin: 4px 0;
+    border-radius: 6px;
+    transition: var(--transition);
+    color: var(--text-muted);
 }
-
-.titulo_lista{
-    font-size: 2vw;
-    
+.lista:hover {
+    background-color: var(--bg);
+    color: var(--primary);
+    padding-left: 20px;
 }

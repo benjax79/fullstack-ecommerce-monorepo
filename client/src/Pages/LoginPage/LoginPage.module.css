@@ -1,47 +1,74 @@
-.article {
-    background-color: thistle;
-    display: flex;
-    font-size: 2vw;
-    flex-direction: column;
-    margin-left: 40%;
-    margin-right: 40%;
-    margin-top: 10vh;
-    gap:8px;
-    border-color: papayawhip;
-    border-style: solid;
-    border-radius: 10%;
-    padding: 5px 5px;
-    
-    
-    
-}
-.form{
+﻿.article {
+    background-color: var(--card-bg);
     display: flex;
     flex-direction: column;
+    width: 100%;
+    max-width: 450px;
+    margin: 10vh auto;
+    gap: 20px;
+    border-radius: var(--radius);
+    padding: 40px;
+    box-shadow: var(--shadow);
 }
-.article label{
-    margin:  0 auto;
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
-.article :nth-child(5){
-    width: 30%;
+.article label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+.article input {
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    outline: none;
+}
+.article input:focus {
+    border-color: var(--primary);
+}
+.article button, .article :nth-child(5) {
     align-self: center;
-    margin-top: 10%;
-    }
-
-.errorMessage{
-    margin-top: 3vw;
-    color:red;
-    font-size: 5vw;
-    text-align: center;
-    
-   
+    margin-top: 20px;
+    padding: 12px 30px;
+    border-radius: 25px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transition);
+    width: 60%;
 }
-
-.closeSession{
+.article button:hover, .article :nth-child(5):hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+.errorMessage {
+    margin-top: 15px;
+    color: #e74c3c;
+    font-size: 1rem;
+    text-align: center;
+    background: #fdf0ed;
+    padding: 10px;
+    border-radius: 8px;
+}
+.closeSession {
     display: block;
-    margin-top: 10vw;
-    
-    font-size: 6vw;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 30px auto;
+    font-size: 1.2rem;
+    padding: 12px 30px;
+    border-radius: 25px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+.closeSession:hover {
+    background-color: #c0392b;
 }

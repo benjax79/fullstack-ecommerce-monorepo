@@ -1,4 +1,16 @@
-.searcher {
-    font-size: 3vw;
-    width: 65%;
+﻿.searcher {
+    font-size: 1.1rem;
+    padding: 12px 24px;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 25px;
+    border: 2px solid var(--primary-light);
+    outline: none;
+    transition: var(--transition);
+    background-color: var(--bg);
+    color: var(--text-main);
+}
+.searcher:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(255, 105, 180, 0.1);
 }

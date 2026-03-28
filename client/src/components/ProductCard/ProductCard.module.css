@@ -1,48 +1,58 @@
-.productCard{
-    border: solid 2px pink;
-    background-color: palevioletred;
+﻿.productCard {
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
     display: flex;
     flex-direction: column;
-    max-width: 15vw;
     text-align: center;
-
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    overflow: hidden;
+    height: 100%;
+    border: 1px solid #fce4ec;
 }
-
-.productCard:hover{
-    transform: scale(1.08);
-    box-shadow: 0 2px 12px 0 #ffb6d5aa;
-    transition: transform 0.2s, box-shadow 0.2s;
+.productCard:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary-light);
 }
 .productCard div {
-    
-    width: 70%;
-    margin: 0 auto;
-    margin-top: 20px;
-    justify-self: center;
-
-    
-    
+    width: 100%;
+    padding: 20px;
+    background-color: var(--bg);
 }
-
 .productCard div img {
     width: 100%;
     aspect-ratio: 1/1;
-    object-fit: cover;
-    
-    
+    object-fit: contain;
+    border-radius: 8px;
+    mix-blend-mode: multiply;
 }
 .productCard p {
-    font-size: 2vw;
-    justify-self: center;
-    flex:1
+    font-size: 1.1rem;
+    padding: 0 15px;
+    margin: 10px 0;
+    color: var(--text-main);
+    font-weight: 500;
 }
-
 .productCard p:nth-child(2) {
-    flex: 2
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-top: auto;
 }
-.productCard button{
+.productCard button {
     align-self: center;
-    border-radius: 5px;
-    font-size: 2vh;
-    margin-bottom: 5px;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 10px 25px;
+    margin-bottom: 20px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+.productCard button:hover {
+    background: var(--primary-dark);
 }
