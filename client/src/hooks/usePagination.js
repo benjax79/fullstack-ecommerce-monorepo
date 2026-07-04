@@ -11,9 +11,12 @@ export const usePagination = () => {
     const [adelanteButtonIsDisabled,setAdelanteButtonIsDisabled] = useState(false);
     const LIMIT =12;
     const [urlSearchParams]= useSearchParams()
-    const searchParam= urlSearchParams.get("search");
-    const searchColor= urlSearchParams.get("color");
+    const searchParam = urlSearchParams.get("search");
+    const searchColor = urlSearchParams.get("color");
+    const searchCategoria = urlSearchParams.get("categoria");
     const searchPrecio_maximo = urlSearchParams.get("precio_maximo");
+    const searchPrecio_minimo = urlSearchParams.get("precio_minimo");
+    const searchOrden = urlSearchParams.get("orden"); // "ASC" o "DESC"
 
     useEffect(  ()=>{
       cargarProductos(0);
@@ -22,7 +25,7 @@ export const usePagination = () => {
     useEffect( () =>{
         cargarProductos(0,searchParam)
 
-    },[searchParam,searchPrecio_maximo,searchColor] );
+    },[searchParam,searchPrecio_maximo,searchPrecio_minimo,searchColor,searchCategoria,searchOrden] );
 
     
  
@@ -35,8 +38,17 @@ export const usePagination = () => {
             if(searchColor){
                 consulta.push(`color=${searchColor}`)
             }
+            if(searchCategoria){
+                consulta.push(`categoria=${searchCategoria}`)
+            }
             if(searchPrecio_maximo){
                 consulta.push(`precio_maximo=${searchPrecio_maximo}`)
+            }
+            if(searchPrecio_minimo){
+                consulta.push(`precio_minimo=${searchPrecio_minimo}`)
+            }
+            if(searchOrden){
+                consulta.push(`orden=${searchOrden}`)
             }
             if(searchParam){
                 consulta.push(`petition=${textToSearch}`)

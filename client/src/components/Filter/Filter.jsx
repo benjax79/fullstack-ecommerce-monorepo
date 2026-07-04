@@ -1,141 +1,131 @@
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
-import style from "./Filter.module.css"
-import { useRef } from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import style from "./Filter.module.css";
+import { useRef, useEffect, useState } from "react";
 
-
-function Filter(){
-    
-            
-    
-    const navegador = useNavigate()
-    const localizacion = useLocation()
+function Filter() {
+    const navegador = useNavigate();
+    const localizacion = useLocation();
     const path = localizacion.pathname;
-    const timer = useRef(null)
-    let parametros = localizacion.search;  
-    const [coloresDisponibles,setColoresDisponibles] = useState( ["rojo"])
-
+    const timer = useRef(null);
     
+    // Obtenemos los parámetros actuales de la URL de forma segura
+    const searchParams = new URLSearchParams(localizacion.search);
+    
+    const [coloresDisponibles, setColoresDisponibles] = useState([]);
+    const [categoriasDisponibles, setCategoriasDisponibles] = useState([]);
 
-    useEffect( ()=> {
-        const llamada = async ()=>{
-            const req = await fetch("http://localhost:3000/producto/color");
-            const array_json = await req.json()
-            const respuesta = array_json.map( (objeto) => objeto.color)
-            setColoresDisponibles(respuesta);
+    useEffect(() => {
+        const cargarFiltros = async () => {
+            try {
+                // Cargar Colores
+                const resColor = await fetch("http://localhost:3000/producto/color");
+                const colores = await resColor.json();
+                setColoresDisponibles(colores.map(obj => obj.color));
+                
+                // Cargar Categorías
+                const resCat = await fetch("http://localhost:3000/producto/categoria");
+                const categorias = await resCat.json();
+                setCategoriasDisponibles(categorias.map(obj => obj.categoria));
+            } catch (error) {
+                console.error("Error cargando filtros:", error);
             }
-            llamada()
+        };
+        cargarFiltros();
+        
         return () => {
-            clearTimeout(timer.current)
-        }
-    }, [])
+            clearTimeout(timer.current);
+        };
+    }, []);
 
-    
-    const filtrarColor = (color) => {
-        // Limpiamos posible temporizados anterior
+    // Función genérica para actualizar la URL usando URLSearchParams
+    const actualizarFiltro = (clave, valor) => {
         clearTimeout(timer.current);
-
-        let parametross= parametros;
-
-        if(parametross.includes(color)){
-            if(parametross.includes("&")){
-                parametross = parametross.replace(`&color=${color}`,"")
-                let url_final = path + parametross
-                navegador(url_final)
-                return;
+        
+        const params = new URLSearchParams(localizacion.search);
+        
+        if (valor) {
+            // Si el mismo valor ya estaba (ej. click en el mismo color), lo quitamos (toggle)
+            if (params.get(clave) === valor && clave !== 'orden' && clave !== 'precio_maximo' && clave !== 'precio_minimo') {
+                params.delete(clave);
+            } else {
+                params.set(clave, valor);
             }
-            else{
-                parametross = parametross.replace(`color=${color}`,"")
-                let url_final = path + parametross
-                navegador(url_final)
-                return;
-
-            }
+        } else {
+            // Si el valor es vacío (borraron el input), eliminamos la clave
+            params.delete(clave);
         }
-        // Filtramos el mismo parametros si es que ya estaba
-        parametross = parametross.split("&").filter( (contenido) => !contenido.includes("color")).join("&"); 
-        
-        const url_actual = path + parametross;
-        
-        
-        
-        const parametro = `&color=${color}`
-        let url_final = url_actual + parametro;
 
-        // Si no tiene ? significa que nunca se busco
-        if(!url_final.includes("?")){
-            url_final = path + `?color=${color}`
-        }
+        const url_final = `${path}?${params.toString()}`;
+        
         timer.current = setTimeout(() => {
             navegador(url_final);
-
         }, 300);
-    }
+    };
 
-     const  filtrarPrecioMaximo= (evento) => {
-        // Limpiamos posible temporizados anterior
-        clearTimeout(timer.current);
-
-        // Filtramos el mismo parametros si es que ya estaba
-        let parametross = parametros.split("&").filter( (contenido) => !contenido.includes("precio_maximo")).join("&"); 
-        
-        const url_actual = path + parametross;
-        const precioMaximo = evento.target.value;
-        
-        
-        const parametro = `&precio_maximo=${precioMaximo}`
-        let url_final = url_actual + parametro;
-
-        // Si no tiene ? significa que nunca se busco
-        if(!url_final.includes("?")){
-            url_final = path + `?precio_maximo=${precioMaximo}`
-        }
-        timer.current = setTimeout(() => {
-            navegador(url_final);
-
-        }, 300);
-
-        
-        
-    }
-
-
-    return(
+    return (
         <section className={style.filter}>
             <div className={style.precio_maximo}>
-                <p>Precio maximo</p>
-                <input onChange={filtrarPrecioMaximo}/>
+                <p>Ordenar por</p>
+                <select 
+                    onChange={(e) => actualizarFiltro("orden", e.target.value)}
+                    value={searchParams.get("orden") || "ASC"}
+                    style={{ width: "100%", padding: "5px" }}
+                >
+                    <option value="ASC">Menor precio</option>
+                    <option value="DESC">Mayor precio</option>
+                </select>
             </div>
-                <details>
-                    <summary className={style.titulo_lista}>Colores disponibles</summary>
-                    {coloresDisponibles.map( (color,indice) => (
-                        <li key={indice} onClick={()=>filtrarColor(color)} className={style.lista}>{color}</li>
-                    )
 
-                    )}
-                </details>
-                
-             <div>
-                <p>Categoria 1</p>
+            <details>
+                <summary className={style.titulo_lista}>Categorías</summary>
+                {categoriasDisponibles.map((cat, indice) => (
+                    <li 
+                        key={indice} 
+                        onClick={() => actualizarFiltro("categoria", cat)} 
+                        className={style.lista}
+                        style={{ fontWeight: searchParams.get("categoria") === cat ? "bold" : "normal" }}
+                    >
+                        {cat}
+                    </li>
+                ))}
+            </details>
+
+            <details>
+                <summary className={style.titulo_lista}>Colores disponibles</summary>
+                {coloresDisponibles.map((color, indice) => (
+                    <li 
+                        key={indice} 
+                        onClick={() => actualizarFiltro("color", color)} 
+                        className={style.lista}
+                        style={{ fontWeight: searchParams.get("color") === color ? "bold" : "normal" }}
+                    >
+                        {color}
+                    </li>
+                ))}
+            </details>
+            
+            <div className={style.precio_maximo}>
+                <p>Precio mínimo</p>
+                <input 
+                    type="number" 
+                    placeholder="Ej. 1000"
+                    defaultValue={searchParams.get("precio_minimo") || ""}
+                    onChange={(e) => actualizarFiltro("precio_minimo", e.target.value)} 
+                />
             </div>
-             <div>
-                <p>Categoria 1</p>
+
+            <div className={style.precio_maximo}>
+                <p>Precio máximo</p>
+                <input 
+                    type="number" 
+                    placeholder="Ej. 50000"
+                    defaultValue={searchParams.get("precio_maximo") || ""}
+                    onChange={(e) => actualizarFiltro("precio_maximo", e.target.value)} 
+                />
             </div>
-             <div>
-                <p>Categoria 1</p>
-            </div>
-             <div>
-                <p>Categoria 1</p>
-            </div>
-             <div>
-                <p>Categoria 1</p>
-            </div>
-             <div>
-                <p>Categoria 1</p>
-            </div>
+            
         </section>
-    )
+    );
 }
 
-export default Filter 
+export default Filter;

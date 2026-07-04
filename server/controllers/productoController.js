@@ -36,9 +36,15 @@ export const getSearchedItems = async (req,res) => {
         
         let parametros = [limit,offset];
         let consulta = ["SELECT id_producto,nombre,precio,stock,imagen FROM producto WHERE 1=1"];
+        
         if(valores.color){
             consulta.push(`color = $${contador_inicial}`)
             parametros.push(valores.color)
+            contador_inicial++;
+        }
+        if(valores.categoria){
+            consulta.push(`categoria = $${contador_inicial}`)
+            parametros.push(valores.categoria)
             contador_inicial++;
         }
         if(valores.precio_maximo){
@@ -46,16 +52,26 @@ export const getSearchedItems = async (req,res) => {
             parametros.push(valores.precio_maximo)
             contador_inicial++;
         }
+        if(valores.precio_minimo){
+            consulta.push(`precio >= $${contador_inicial}`)
+            parametros.push(valores.precio_minimo)
+            contador_inicial++;
+        }
         if(petition){
             petition= `%${petition}%`;
             consulta.push(`nombre ilike $${contador_inicial}`)
             parametros.push(petition)
             contador_inicial++;
-
         }
 
         consulta = consulta.join(" AND ");
-        const consulta_lista = [consulta," ORDER BY precio LIMIT $1 OFFSET $2"].join("");
+        
+        let orden_sql = "ASC";
+        if (valores.orden === "DESC") {
+            orden_sql = "DESC";
+        }
+
+        const consulta_lista = [consulta,` ORDER BY precio ${orden_sql} LIMIT $1 OFFSET $2`].join("");
         const query = await pool.query(consulta_lista,parametros); 
 
 
@@ -78,6 +94,13 @@ export const getSearchedItems = async (req,res) => {
 
 export const getAllColors = async(req,res) =>{
     const solicitud = "SELECT DISTINCT color from producto where stock > 0";
+    let respuesta = await pool.query(solicitud)
+    respuesta = respuesta.rows
+    res.json(respuesta);
+}
+
+export const getAllCategories = async(req,res) =>{
+    const solicitud = "SELECT DISTINCT categoria from producto where stock > 0";
     let respuesta = await pool.query(solicitud)
     respuesta = respuesta.rows
     res.json(respuesta);
