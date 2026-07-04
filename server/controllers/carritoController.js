@@ -52,7 +52,7 @@ export const comprarCarrito = async(req,res) => {
     // Crear boleta ( Recibimos la id_boleta ) -> Asociar cada producto con cantidad a boleta  ( id_boleta + id_producto + cantidad) * cada producto
     // productos= {items: [{id_producto:IDREADL,precio:PRECIO REAL, cantidad:CANTIDAD REAL},{id_producto:IDREADL,precio:PRECIO REAL, cantidad:CANTIDAD REAL ...}]}
     try{
-        const {id_cliente, productos} = req.body;
+        const {id_cliente, productos, direccion_envio, metodo_pago} = req.body;
         
         // Calcular el precio total
         const clave_valor_list = productos.items;
@@ -61,10 +61,10 @@ export const comprarCarrito = async(req,res) => {
             precio_total += producto.precio * producto.cantidad;
         }
         
-        // Crear la boleta con el precio_total
+        // Crear la boleta con el precio_total, direccion y metodo_pago
         const resultBoleta = await pool.query(
-            "INSERT INTO boleta (id_cliente, precio_total) values ($1, $2) RETURNING id_boleta",
-            [id_cliente, precio_total]
+            "INSERT INTO boleta (id_cliente, precio_total, direccion_envio, metodo_pago) values ($1, $2, $3, $4) RETURNING id_boleta",
+            [id_cliente, precio_total, direccion_envio, metodo_pago]
         );
         const id_boleta = resultBoleta.rows[0].id_boleta;
         

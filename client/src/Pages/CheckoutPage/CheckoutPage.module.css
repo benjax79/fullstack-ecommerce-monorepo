@@ -1,0 +1,126 @@
+.checkoutContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.formSection {
+    flex: 2;
+    min-width: 300px;
+    background-color: thistle;
+    padding: 30px;
+    border-radius: 10px;
+    border: 2px solid papayawhip;
+}
+
+.summarySection {
+    flex: 1;
+    min-width: 300px;
+    background-color: #f8f9fa;
+    padding: 30px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    height: fit-content;
+}
+
+.formSection h2, .summarySection h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 2vw;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.inputGroup label {
+    font-weight: bold;
+}
+
+.inputGroup input, .inputGroup select {
+    padding: 12px;
+    font-size: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.confirmButton {
+    background-color: #28a745;
+    color: white;
+    padding: 15px;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.confirmButton:hover {
+    background-color: #218838;
+}
+
+.summaryList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.summaryItem {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+}
+
+.divider {
+    margin: 20px 0;
+    border: none;
+    border-top: 2px solid #ddd;
+}
+
+.totalRow {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.errorMessage {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 50px;
+    font-size: 2rem;
+}
+
+.emptyState button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 768px) {
+    .checkoutContainer {
+        flex-direction: column;
+    }
+    .formSection h2, .summarySection h2 {
+        font-size: 1.5rem;
+    }
+}
