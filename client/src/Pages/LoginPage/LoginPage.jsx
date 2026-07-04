@@ -44,7 +44,35 @@ function LoginPage(){
 
     if(user){
         return(
-            <button onClick={handleCloseSession} className={style.closeSession}>Cerrar sesion</button>
+            <div className={style.dashboardContainer}>
+                <h1 className={style.dashboardTitle}>¡Hola, {user.nombre}!</h1>
+                <p className={style.dashboardSubtitle}>Bienvenido a tu panel de usuario</p>
+                
+                <div className={style.dashboardActions}>
+                    {user.is_admin && (
+                        <button 
+                            className={style.adminButton} 
+                            onClick={() => navigate('/admin')}
+                        >
+                            Panel de Administrador
+                        </button>
+                    )}
+                    
+                    <button 
+                        className={style.historyButton} 
+                        onClick={() => navigate('/mis-compras')}
+                    >
+                        Ver Historial de Compras
+                    </button>
+                    
+                    <button 
+                        onClick={handleCloseSession} 
+                        className={style.closeSessionDashboard}
+                    >
+                        Cerrar sesión
+                    </button>
+                </div>
+            </div>
         )
     }
 

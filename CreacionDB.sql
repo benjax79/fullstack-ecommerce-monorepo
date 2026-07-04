@@ -4,6 +4,7 @@ CREATE Table cliente(
     apellido VARCHAR(50),
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR (255) not NULL,
+    is_admin BOOLEAN DEFAULT FALSE NOT NULL,
     creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 CREATE Table producto(

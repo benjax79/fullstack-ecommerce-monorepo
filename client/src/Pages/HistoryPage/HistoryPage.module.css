@@ -1,0 +1,97 @@
+.historyContainer {
+    padding: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.historyContainer h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 1.2rem;
+}
+
+.loading {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 1.5rem;
+}
+
+.emptyState {
+    text-align: center;
+    background-color: #f8f9fa;
+    padding: 50px;
+    border-radius: 10px;
+    border: 1px dashed #ccc;
+}
+
+.emptyState button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.emptyState button:hover {
+    background-color: #0056b3;
+}
+
+.tableContainer {
+    overflow-x: auto;
+}
+
+.historyTable {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.historyTable th, .historyTable td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.historyTable th {
+    background-color: thistle;
+    color: #333;
+    font-weight: bold;
+}
+
+.historyTable tr:hover {
+    background-color: #f1f1f1;
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+/* Clases dinámicas basadas en el estado */
+.pendiente {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.enviado {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.cancelado {
+    background-color: #f8d7da;
+    color: #721c24;
+}

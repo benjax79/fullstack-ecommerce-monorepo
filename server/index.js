@@ -6,6 +6,7 @@ import { routerConexion } from './routes/conexionRoutes.js';
 import { routerProducto } from './routes/productoRoutes.js';
 import {routerAuth} from "./routes/authRoutes.js"
 import { routerCarrito } from './routes/carritoRoutes.js';
+import { routerBoleta } from './routes/boletaRoutes.js';
 
 // Configurar variables de entorno | Se carga variables de .env en process.env
 dotenv.config(); 
@@ -21,6 +22,7 @@ app.use("/conexion",routerConexion)
 app.use("/producto",routerProducto)
 app.use("/auth",routerAuth)
 app.use("/carrito",routerCarrito)
+app.use("/boleta",routerBoleta)
 
 
 

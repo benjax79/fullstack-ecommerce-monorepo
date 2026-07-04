@@ -33,19 +33,19 @@ export const login = async (req,res) => {
     try{
         const {email,password} = req.body;
 
-        const data= await pool.query("SELECT nombre,password,email,id_cliente FROM cliente WHERE email = $1", [email]);
+        const data= await pool.query("SELECT nombre,password,email,id_cliente,is_admin FROM cliente WHERE email = $1", [email]);
 
 
         if(data.rows.length===0){
             return res.status(401).send("El usuario no existe");
         }
         const hashedDbPassword = data.rows[0].password;
-        const {nombre,id_cliente}=data.rows[0];
+        const {nombre,id_cliente,is_admin}=data.rows[0];
 
         const isValid = await bscrypt.compare(password,hashedDbPassword);
 
         if(isValid){
-            const payload= {"nombre":nombre,"id_cliente":id_cliente,"email":email}
+            const payload= {"nombre":nombre,"id_cliente":id_cliente,"email":email, "is_admin": is_admin}
             const token = jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:"7d"});
             return res.status(200).json({token,user:{...payload}})
         }

@@ -7,7 +7,10 @@ import LoginPage from "./Pages/LoginPage/LoginPage.jsx";
 import RegisterPage from "./Pages/RegisterPage/RegisterPage.jsx";
 import CarritoPage from "./Pages/CarritoPage/CarritoPage.jsx"
 import CheckoutPage from "./Pages/CheckoutPage/CheckoutPage.jsx"
+import HistoryPage from "./Pages/HistoryPage/HistoryPage.jsx";
+import AdminPage from "./Pages/AdminPage/AdminPage.jsx";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute.jsx";
+import AdminRoute from "./components/ProtectedRoute/AdminRoute.jsx";
 
 
 function App() {
@@ -32,8 +35,13 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/carrito" element={<CarritoPage/>} />
             <Route path="/checkout" element={<CheckoutPage/>}/> 
+            <Route path="/mis-compras" element={<HistoryPage/>}/>
           </Route>
           
+          {/* Rutas de Administrador */}
+          <Route element={<AdminRoute />}>
+             <Route path="/admin" element={<AdminPage/>}/>
+          </Route>
 
         </Route>
 

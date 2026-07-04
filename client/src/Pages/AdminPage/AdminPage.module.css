@@ -1,0 +1,180 @@
+.adminContainer {
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    background-color: #343a40;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.header h2 {
+    margin: 0 0 10px 0;
+    font-size: 2rem;
+}
+
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab, .activeTab {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.tab {
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+.tab:hover {
+    background-color: #dee2e6;
+}
+
+.activeTab {
+    background-color: #007bff;
+    color: white;
+}
+
+.panel {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.tableContainer {
+    overflow-x: auto;
+}
+
+.adminTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.adminTable th, .adminTable td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.adminTable th {
+    background-color: #f8f9fa;
+}
+
+.statusBadge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.pendiente { background-color: #fff3cd; color: #856404; }
+.enviado { background-color: #d4edda; color: #155724; }
+
+.actionBtn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.actionBtn:hover {
+    background-color: #218838;
+}
+
+/* Product Form */
+.productForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 600px;
+}
+
+.formGroupRow {
+    display: flex;
+    gap: 15px;
+}
+
+.formGroupRow .formGroup {
+    flex: 1;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.formGroup label {
+    font-weight: bold;
+}
+
+.formGroup input, .formGroup textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.submitBtn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.submitBtn:hover {
+    background-color: #0056b3;
+}
+
+.dangerBtn {
+    background-color: #ffc107;
+    color: #212529;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dangerBtn:hover {
+    background-color: #e0a800;
+}
+
+.productManagementGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.deleteBtn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.deleteBtn:hover {
+    background-color: #c82333;
+}

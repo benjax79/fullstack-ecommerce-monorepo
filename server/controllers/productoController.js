@@ -15,7 +15,7 @@ export const getGroupedItems = async (req,res) =>{
     let {limit,offset}   =req.query;
 
     limit= Math.min(50,limit);
-    const query=await pool.query("SELECT id_producto,nombre,precio,stock,imagen FROM producto ORDER BY precio LIMIT $1 OFFSET $2",[limit,offset]);
+    const query=await pool.query("SELECT id_producto,nombre,precio,stock,imagen FROM producto WHERE activo = true ORDER BY precio LIMIT $1 OFFSET $2",[limit,offset]);
     const result =query.rows;
     res.json(result); // Array de jsons
     }
@@ -35,7 +35,7 @@ export const getSearchedItems = async (req,res) => {
         let contador_inicial = 3; // Es 3 porque limit, offset y petition ocuparan los primeros 3 lugares
         
         let parametros = [limit,offset];
-        let consulta = ["SELECT id_producto,nombre,precio,stock,imagen FROM producto WHERE 1=1"];
+        let consulta = ["SELECT id_producto,nombre,precio,stock,imagen FROM producto WHERE activo = true"];
         
         if(valores.color){
             consulta.push(`color = $${contador_inicial}`)
@@ -105,3 +105,45 @@ export const getAllCategories = async(req,res) =>{
     respuesta = respuesta.rows
     res.json(respuesta);
 }
+
+// ADMIN: Crear un nuevo producto
+export const createProduct = async (req, res) => {
+    try {
+        const { nombre, categoria, color, stock, precio, descripcion, imagen } = req.body;
+        
+        const query = await pool.query(
+            `INSERT INTO producto (nombre, categoria, color, stock, precio, descripcion, imagen, activo) 
+             VALUES ($1, $2, $3, $4, $5, $6, $7, true) 
+             RETURNING *`,
+            [nombre, categoria, color, stock, precio, descripcion, imagen]
+        );
+        
+        res.status(201).json(query.rows[0]);
+    } catch (error) {
+        console.error("Error al crear producto:", error);
+        res.status(500).send("Error del servidor al crear producto");
+    }
+};
+
+// ADMIN: Obtener todos los productos activos para el panel
+export const getAllProductsAdmin = async (req, res) => {
+    try {
+        const query = await pool.query("SELECT * FROM producto WHERE activo = true ORDER BY id_producto DESC");
+        res.status(200).json(query.rows);
+    } catch (error) {
+        console.error("Error al obtener productos:", error);
+        res.status(500).send("Error del servidor");
+    }
+};
+
+// ADMIN: Eliminar producto (Borrado Lógico)
+export const deleteProduct = async (req, res) => {
+    try {
+        const { id_producto } = req.params;
+        await pool.query("UPDATE producto SET activo = false WHERE id_producto = $1", [id_producto]);
+        res.status(200).send("Producto eliminado exitosamente");
+    } catch (error) {
+        console.error("Error al eliminar producto:", error);
+        res.status(500).send("Error del servidor al eliminar producto");
+    }
+};
