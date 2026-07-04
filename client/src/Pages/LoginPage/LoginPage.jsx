@@ -1,12 +1,13 @@
 import style from "./LoginPage.module.css"
 import { useAuth } from "../../context/AuthContext.jsx"
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 function LoginPage(){
 
    
-
+    const navigate = useNavigate();
     const {user,login,logOut}= useAuth();
     const [loginFail, setLoginFail]= useState(false)
     const [email,setEmail]=useState("");
@@ -26,6 +27,7 @@ function LoginPage(){
 
         if(resultStatus){
             setLoginFail(false);
+            navigate('/');
         }
         else{
             setLoginFail(true);
@@ -59,6 +61,12 @@ function LoginPage(){
             <button>Iniciar sesion</button>
             
             </form>
+            <p 
+                style={{textAlign: 'center', marginTop: '20px', fontSize: '1.5vw', color: 'blue', cursor: 'pointer', textDecoration: 'underline'}}
+                onClick={() => navigate('/registro')}
+            >
+                ¿No tienes cuenta? Regístrate aquí
+            </p>
         </article>
         {loginFail&&<p className={style.errorMessage}>Credenciales incorrectas</p>}
         </>

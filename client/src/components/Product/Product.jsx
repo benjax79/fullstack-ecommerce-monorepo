@@ -43,11 +43,13 @@ function Product(){
     const agregarAlCarrito = async() => {
         try{
         const datos= JSON.parse(localStorage.getItem("user"));
+        const token = localStorage.getItem("token");
 
         const response = await fetch("http://localhost:3000/carrito/agregarAlCarrito",{
             method: "POST",
             headers:{
-                "content-type":"application/json"
+                "content-type":"application/json",
+                "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify({
                 id_cliente:datos.id_cliente,

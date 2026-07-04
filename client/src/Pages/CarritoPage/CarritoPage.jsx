@@ -11,10 +11,12 @@ function CarritoPage(){
     const eliminarProductoCarrito = async(id_producto) => {
         try{ 
             const id_cliente = JSON.parse(localStorage.getItem("user")).id_cliente
+            const token = localStorage.getItem("token");
             const response = await fetch("http://localhost:3000/carrito/eliminarDeCarrito",{
             method: "POST",
             headers:{
-                "content-type":"application/json"
+                "content-type":"application/json",
+                "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify({
                 id_cliente:id_cliente,
@@ -39,8 +41,12 @@ function CarritoPage(){
     let amount=0;
     let totalPrice=0;
     const getCartProducts = async(id_cliente)=>{
-        
-        const request = await fetch(`http://localhost:3000/carrito/getCartProducts/${id_cliente}`);
+        const token = localStorage.getItem("token");
+        const request = await fetch(`http://localhost:3000/carrito/getCartProducts/${id_cliente}`, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
         
         const product_list = await request.json()
         setProductCart(product_list);

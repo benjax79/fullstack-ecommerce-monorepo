@@ -1,7 +1,9 @@
 import { Router } from "express";
-import { register,login } from "../controllers/authController.js";
+import { register, login } from "../controllers/authController.js";
+import { validateRegister, validateLogin, checkValidationErrors } from "../middlewares/validateInput.js";
 
 export const routerAuth = Router();
 
-routerAuth.post("/register",register);
-routerAuth.post("/login",login);
+// Aplicamos los middlewares de validación antes del controlador
+routerAuth.post("/register", validateRegister, checkValidationErrors, register);
+routerAuth.post("/login", validateLogin, checkValidationErrors, login);

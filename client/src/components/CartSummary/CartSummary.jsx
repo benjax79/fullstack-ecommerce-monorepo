@@ -16,6 +16,7 @@ function CartSummary ({productsCart,amount,totalPrice,setProductCart}){
             }
             
             const user = JSON.parse(localStorage.getItem("user"));
+            const token = localStorage.getItem("token");
             const id_cliente = user?.id_cliente;
             
             if (!id_cliente) {
@@ -26,7 +27,8 @@ function CartSummary ({productsCart,amount,totalPrice,setProductCart}){
             const response = await fetch("http://localhost:3000/carrito/comprarCarrito",{
                 method:"POST",
                 headers:{
-                    "content-type":"application/json"
+                    "content-type":"application/json",
+                    "Authorization": `Bearer ${token}`
                 },
                 body:JSON.stringify({
                     id_cliente: id_cliente,
