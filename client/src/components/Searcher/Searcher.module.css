@@ -1,4 +1,52 @@
 .searcher {
-    font-size: 3vw;
-    width: 65%;
+    display: flex;
+    align-items: center;
+    background-color: #f1f3f5;
+    border-radius: var(--radius-lg);
+    padding: 5px 15px;
+    width: 100%;
+    border: 1px solid transparent;
+    transition: all 0.3s;
+}
+
+.searcher:focus-within {
+    background-color: var(--background-surface);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--secondary-color);
+}
+
+.searcher input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 12px;
+    font-size: 1.15rem;
+    outline: none;
+    color: var(--text-main);
+}
+
+.searcher button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+.searcher button:hover {
+    transform: scale(1.1);
+}
+
+.searcher img {
+    width: 20px;
+    height: 20px;
+    opacity: 0.6;
+}
+
+.searcher:focus-within img {
+    opacity: 1;
+    filter: invert(41%) sepia(85%) saturate(1915%) hue-rotate(320deg) brightness(97%) contrast(106%); /* Rosa aproximado para el hover/focus */
 }

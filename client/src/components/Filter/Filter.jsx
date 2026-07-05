@@ -18,12 +18,12 @@ function Filter() {
         const cargarFiltros = async () => {
             try {
                 // Cargar Colores
-                const resColor = await fetch("http://localhost:3000/producto/color");
+                const resColor = await fetch(`${import.meta.env.VITE_API_URL}/producto/color`);
                 const colores = await resColor.json();
                 setColoresDisponibles(colores.map(obj => obj.color));
                 
                 // Cargar Categorías
-                const resCat = await fetch("http://localhost:3000/producto/categoria");
+                const resCat = await fetch(`${import.meta.env.VITE_API_URL}/producto/categoria`);
                 const categorias = await resCat.json();
                 setCategoriasDisponibles(categorias.map(obj => obj.categoria));
             } catch (error) {

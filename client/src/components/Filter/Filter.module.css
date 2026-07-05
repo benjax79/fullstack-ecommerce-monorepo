@@ -1,40 +1,87 @@
-.filter{
+.filter {
+    background-color: var(--background-surface);
+    border-radius: var(--radius-lg);
+    padding: 30px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
-    width: 25%;
-    align-items: center;
-    margin-top: 50px;
-    background-color: palevioletred;
-    margin-right: 20px;
-    margin-left: 20px;
-    max-width: 20%;
-    margin-left: 2vw;
-}
-.filter p {
-font-size: 2vw;
+    gap: 25px;
 }
 
-.precio_maximo{
-    width: 80%;
-    margin-top: 1vh;
-    margin-bottom: 1vw;
-    display: flex;
-    flex-direction: column;
-    
-}   
-.precio_maximo p{
-    
-    text-align: center;
+.precio_maximo p, .titulo_lista {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 12px;
+}
+
+.precio_maximo input, .precio_maximo select {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    outline: none;
+    transition: all 0.3s;
+    background-color: var(--background-main);
+}
+
+.precio_maximo input:focus, .precio_maximo select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--secondary-color);
+}
+
+details {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+}
+
+details:last-child {
+    border-bottom: none;
+}
+
+.titulo_lista {
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+    list-style: none;
+}
+
+.titulo_lista::-webkit-details-marker {
+    display: none;
+}
+.titulo_lista::after {
+    content: '▼';
+    position: absolute;
+    right: 0;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    transition: transform 0.3s;
+}
+
+details[open] .titulo_lista::after {
+    transform: rotate(180deg);
 }
 
 .lista {
-    font-size: 2vw;
     list-style: none;
+    padding: 10px 15px;
+    margin: 5px 0;
+    font-size: 1.1rem;
+    color: var(--text-muted);
     cursor: pointer;
-    
+    border-radius: var(--radius-sm);
+    transition: all 0.2s;
 }
 
-.titulo_lista{
-    font-size: 2vw;
-    
+.lista:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+.lista[style*="font-weight: bold"] {
+    background-color: var(--primary-color) !important;
+    color: white !important;
 }

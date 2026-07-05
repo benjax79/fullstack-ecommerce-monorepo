@@ -1,7 +1,16 @@
-.article{
+.list {
     display: flex;
     flex-direction: column;
-    margin-left: 10vw;
-    gap: 5px;
-    
+    gap: 20px;
+    width: 100%;
+}
+
+.emptyCart {
+    text-align: center;
+    padding: 50px;
+    background-color: var(--background-surface);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    font-size: 1.2rem;
+    color: var(--text-muted);
 }

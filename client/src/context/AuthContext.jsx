@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const login = async (email, password) => {
 
-        const respuesta = await fetch("http://localhost:3000/auth/login", { "method": "POST", "headers": { "Content-Type": "application/json" }, "body": JSON.stringify({ "email": email, "password": password }) });
+        const respuesta = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, { "method": "POST", "headers": { "Content-Type": "application/json" }, "body": JSON.stringify({ "email": email, "password": password }) });
         if (!respuesta.ok) {
             return false;
         }

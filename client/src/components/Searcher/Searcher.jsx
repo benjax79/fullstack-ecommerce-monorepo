@@ -26,10 +26,12 @@ function Searcher(){
     }
     
     return(
-        <div >    
-        <input className={style.searcher}  onChange={writeOnNavegator} type="text" placeholder="Escriba lo que desee buscar ..."/>
+        <div className={style.searcher}>    
+            <input onChange={writeOnNavegator} type="text" placeholder="Escriba lo que desee buscar ..."/>
+            <button>
+                <img src="/search-icon.svg" alt="Buscar" onError={(e) => e.target.style.display='none'}/>
+            </button>
         </div>
-        
     )
 }
 

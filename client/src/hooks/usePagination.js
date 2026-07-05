@@ -34,7 +34,7 @@ export const usePagination = () => {
 
             let datos;
 
-            let consulta = [`http://localhost:3000/producto/searcher?limit=${LIMIT+1}&offset=${newOffSet}`];
+            let consulta = [`${import.meta.env.VITE_API_URL}/producto/searcher?limit=${LIMIT+1}&offset=${newOffSet}`];
             if(searchColor){
                 consulta.push(`color=${searchColor}`)
             }

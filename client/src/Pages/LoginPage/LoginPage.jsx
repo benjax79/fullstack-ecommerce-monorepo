@@ -44,60 +44,65 @@ function LoginPage(){
 
     if(user){
         return(
-            <div className={style.dashboardContainer}>
-                <h1 className={style.dashboardTitle}>¡Hola, {user.nombre}!</h1>
-                <p className={style.dashboardSubtitle}>Bienvenido a tu panel de usuario</p>
-                
-                <div className={style.dashboardActions}>
-                    {user.is_admin && (
+            <div className={style.body}>
+                <div className={style.login}>
+                    <h1 className={style.login_text}>¡Hola, {user.nombre}!</h1>
+                    <p className={style.dashboardSubtitle}>Bienvenido a tu panel de usuario</p>
+                    
+                    <div className={style.dashboardActions}>
+                        {user.is_admin && (
+                            <button 
+                                className={style.adminButton} 
+                                onClick={() => navigate('/admin')}
+                            >
+                                Panel de Administrador
+                            </button>
+                        )}
+                        
                         <button 
-                            className={style.adminButton} 
-                            onClick={() => navigate('/admin')}
+                            className={style.historyButton} 
+                            onClick={() => navigate('/mis-compras')}
                         >
-                            Panel de Administrador
+                            Ver Historial de Compras
                         </button>
-                    )}
-                    
-                    <button 
-                        className={style.historyButton} 
-                        onClick={() => navigate('/mis-compras')}
-                    >
-                        Ver Historial de Compras
-                    </button>
-                    
-                    <button 
-                        onClick={handleCloseSession} 
-                        className={style.closeSessionDashboard}
-                    >
-                        Cerrar sesión
-                    </button>
+                        
+                        <button 
+                            onClick={handleCloseSession} 
+                            className={style.closeSessionDashboard}
+                        >
+                            Cerrar sesión
+                        </button>
+                    </div>
                 </div>
             </div>
         )
     }
 
-
     return(
-        <>
-        <article className={style.article}>
-            <form onSubmit={handleLogin} className={style.form} >
-            <label htmlFor="email" >Correo</label>
-            <input onChange={handleEmail} type="email"  name="email" placeholder="Ingrese su correo ..." required ></input>
+        <div className={style.body}>
+            <article className={style.login}>
+                <h1 className={style.login_text}>Iniciar Sesión</h1>
+                <form onSubmit={handleLogin} className={style.form_login} >
+                    
+                    <input className={style.login_input} onChange={handleEmail} type="email" name="email" placeholder="Ingrese su correo ..." required />
 
-            <label htmlFor="password" >contraseña</label>
-            <input onChange={handlePassword} type="password" name="password" placeholder="Ingrese su contraseña ..." required></input>
-            <button>Iniciar sesion</button>
-            
-            </form>
-            <p 
-                style={{textAlign: 'center', marginTop: '20px', fontSize: '1.5vw', color: 'blue', cursor: 'pointer', textDecoration: 'underline'}}
-                onClick={() => navigate('/registro')}
-            >
-                ¿No tienes cuenta? Regístrate aquí
-            </p>
-        </article>
-        {loginFail&&<p className={style.errorMessage}>Credenciales incorrectas</p>}
-        </>
+                    <input className={style.login_input} onChange={handlePassword} type="password" name="password" placeholder="Ingrese su contraseña ..." required />
+                    
+                    <div className={style.login_button_div}>
+                        <button className={style.login_button}>Iniciar sesión</button>
+                    </div>
+                </form>
+                
+                {loginFail && <p className={style.login_error_text}>Credenciales incorrectas</p>}
+
+                <button 
+                    className={style.register_button}
+                    onClick={() => navigate('/registro')}
+                >
+                    ¿No tienes cuenta? Regístrate aquí
+                </button>
+            </article>
+        </div>
     )
 }
 

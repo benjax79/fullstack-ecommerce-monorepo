@@ -1,39 +1,72 @@
-.container{
+.article {
     display: flex;
-    flex-direction: row;
-    
-    height: 10vh;
-    
-    
-    font-size: 2vw;
-
-    gap: 10px;
-    
-    
+    background-color: var(--background-surface);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+    gap: 20px;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s;
 }
-.container img{
+
+.article:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.image {
+    width: 100px;
+    height: 100px;
     object-fit: cover;
-    aspect-ratio: 1/1;
-    height: 100%;
+    border-radius: var(--radius-sm);
 }
 
-.container p{
+.div_info {
     flex: 1;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.container div{
-    flex: 1;
-    font-size: 2vw;
-    text-align: center;
+.title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-main);
 }
 
-.eliminar {
-    background-color: red;
+.price {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
 }
 
-.eliminar:hover{
-  transform: translateY(-5px) scale(1.02); /* Sube 5px y crece un 2% */
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2); /* Sombra más profunda */
-  cursor: pointer;
+.quantity {
+    color: var(--text-muted);
+}
+
+.deleteButton {
+    background-color: transparent;
+    color: var(--danger);
+    border: 1px solid var(--danger);
+    padding: 8px 15px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.deleteButton:hover {
+    background-color: var(--danger);
+    color: white;
+}
+
+@media (max-width: 600px) {
+    .article {
+        flex-direction: column;
+        text-align: center;
+    }
+    .deleteButton {
+        width: 100%;
+    }
 }

@@ -1,0 +1,32 @@
+.pageContainer {
+    width: 95%;
+    max-width: 1600px;
+    margin: 40px auto;
+    padding: 0;
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.filterSection {
+    flex: 0 0 280px; /* Ancho fijo para los filtros */
+    position: sticky;
+    top: 100px;
+}
+
+.productsSection {
+    flex: 1;
+    min-width: 0;
+}
+
+@media (max-width: 900px) {
+    .pageContainer {
+        flex-direction: column;
+    }
+    .filterSection {
+        flex: none;
+        width: 100%;
+        position: static;
+        margin-bottom: 30px;
+    }
+}

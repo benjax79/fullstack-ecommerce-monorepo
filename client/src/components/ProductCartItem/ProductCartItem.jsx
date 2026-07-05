@@ -7,20 +7,18 @@ function ProductCartItem({nombre,cantidad,precio,imagen,id_producto,eliminarProd
 
     
     return (
-        <div className={style.container}>
-            <img src={imagen} alt="imagen producto en carrito" />
-            <p>{nombre}</p> 
-            <div>
-            <p>Cantidad  </p>
-            <p>{cantidad}</p>
+        <div className={style.article}>
+            <img src={imagen} alt={nombre} className={style.image} />
+            
+            <div className={style.div_info}>
+                <p className={style.title}>{nombre}</p> 
+                <p className={style.quantity}>Cantidad: {cantidad}</p>
+                <p className={style.price}>${precio*cantidad}</p>
             </div>
-            <div>
-            <p>Total</p>
-            <p>{precio*cantidad}</p>
-            </div>
-            <div>
-                <div onClick={()=>eliminarProductoCarrito(id_producto)} className={style.eliminar}> Eliminar</div>
-            </div>
+            
+            <button onClick={()=>eliminarProductoCarrito(id_producto)} className={style.deleteButton}>
+                Eliminar
+            </button>
         </div>
     )
 }

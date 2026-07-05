@@ -26,7 +26,7 @@ function RegisterPage(){
         e.preventDefault();
         
         try {
-            const response = await fetch("http://localhost:3000/auth/register", {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData)
@@ -66,34 +66,30 @@ function RegisterPage(){
     };
 
     return(
-        <>
-        <article className={style.article}>
-            <h2>Crear Cuenta</h2>
-            <form onSubmit={handleRegister} className={style.form} >
+        <div className={style.body}>
+            <article className={style.register}>
+                <h2 className={style.register_text}>Crear Cuenta</h2>
+                <form onSubmit={handleRegister} className={style.form_register} >
+                    
+                    <input className={style.register_input} onChange={handleChange} type="text" name="nombre" placeholder="Tu nombre..." required />
+
+                    <input className={style.register_input} onChange={handleChange} type="text" name="apellido" placeholder="Tu apellido..." required />
+
+                    <input className={style.register_input} onChange={handleChange} type="email" name="email" placeholder="Tu correo electrónico..." required />
+
+                    <input className={style.register_input} onChange={handleChange} type="password" name="password" placeholder="Crea una contraseña..." required />
+                    
+                    <button className={style.register_button} type="submit">Registrarse</button>
+                </form>
                 
-                <label htmlFor="nombre" >Nombre</label>
-                <input onChange={handleChange} type="text" name="nombre" placeholder="Tu nombre..." required />
+                {registerStatus === "error" && <p className={style.error_message}>{errorMessage}</p>}
+                {registerStatus === "success" && <p className={style.error_message} style={{backgroundColor: '#d4edda', color: '#155724'}}>¡Cuenta creada! Redirigiendo al login...</p>}
 
-                <label htmlFor="apellido" >Apellido</label>
-                <input onChange={handleChange} type="text" name="apellido" placeholder="Tu apellido..." required />
-
-                <label htmlFor="email" >Correo</label>
-                <input onChange={handleChange} type="email" name="email" placeholder="Tu correo electrónico..." required />
-
-                <label htmlFor="password" >Contraseña</label>
-                <input onChange={handleChange} type="password" name="password" placeholder="Crea una contraseña..." required />
-                
-                <button type="submit">Registrarse</button>
-            </form>
-            
-            <p className={style.loginLink} onClick={() => navigate('/sesion')}>
-                ¿Ya tienes cuenta? Inicia sesión
-            </p>
-        </article>
-        
-        {registerStatus === "error" && <p className={style.errorMessage}>{errorMessage}</p>}
-        {registerStatus === "success" && <p className={style.successMessage}>¡Cuenta creada! Redirigiendo al login...</p>}
-        </>
+                <p className={style.login_text}>
+                    ¿Ya tienes cuenta? <button className={style.login_link} onClick={() => navigate('/sesion')}>Inicia sesión</button>
+                </p>
+            </article>
+        </div>
     )
 }
 

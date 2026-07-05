@@ -1,10 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* Paleta de Colores Pink/Premium */
+    --primary-color: #ff477e;      /* Rosa vibrante principal */
+    --primary-hover: #e03566;      /* Rosa vibrante oscuro */
+    --secondary-color: #ffe3ed;    /* Rosa pastel para fondos sutiles */
+    --background-main: #fcfcfc;    /* Blanco casi puro */
+    --background-surface: #ffffff; /* Blanco puro para tarjetas */
+    
+    /* Grises para textos y bordes */
+    --text-main: #2b2b2b;
+    --text-muted: #6c757d;
+    --border-color: #e9ecef;
+    
+    /* Estados */
+    --success: #28a745;
+    --danger: #dc3545;
+    --warning: #ffc107;
+
+    /* Sombras y Bordes */
+    --shadow-sm: 0 2px 4px rgba(255, 71, 126, 0.05);
+    --shadow-md: 0 4px 12px rgba(255, 71, 126, 0.1);
+    --shadow-lg: 0 10px 25px rgba(255, 71, 126, 0.15);
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
 }
 
 body {
-    margin: 0;
-    padding: 0;
+    background-color: var(--background-main);
+    color: var(--text-main);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar estilizada */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background-main);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+/* Reseteo general de botones y enlaces */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    font-family: inherit;
 }

@@ -16,11 +16,18 @@ function ProductCartList({productsCart ,eliminarProductoCarrito}){
     
     
 
-    return(
-        <article className={style.article}>
-            {lista}
-        </article>
+    if (productsCart.length === 0) {
+        return (
+            <div className={style.emptyCart}>
+                Tu carrito está vacío. ¡Agrega algunos productos increíbles!
+            </div>
+        )
+    }
 
+    return(
+        <div className={style.list}>
+            {lista}
+        </div>
     )
 }
 

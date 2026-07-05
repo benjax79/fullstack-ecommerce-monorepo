@@ -15,14 +15,16 @@ function ProductCard(props){
 
     return(
         <article className={style.productCard}>
-                <div> 
-                    <img src={imagen} alt="maquillaje" />
-                </div>
-                <p >{nombre}</p>
-                <p>Precio: {precio}</p>
-                <p>Cantidad: {stock}</p>
-                <button  style={{display:"block",justifySelf:"center"}}>Ver producto</button>
-            </article>
+            <div className={style.imageContainer}> 
+                <img src={imagen} alt={nombre} className={style.image} />
+            </div>
+            <div className={style.infoContainer}>
+                <p className={style.title}>{nombre}</p>
+                <p className={style.price}>${precio}</p>
+                <p className={style.stock}>Stock: {stock}</p>
+                <button className={style.addButton}>Ver producto</button>
+            </div>
+        </article>
     )
 }
 

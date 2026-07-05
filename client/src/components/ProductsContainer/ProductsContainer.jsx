@@ -15,18 +15,18 @@ function ProductsContainer( {adelanteButtonIsDisabled,atrasButtonIsDisabled,hand
 
     return(
         
-        <div >
-        <section className= {style.ProductsContainer}>
-            
-            {productos.map(({id_producto,...parametros}) => <Link to= {`/producto/${id_producto}`}>  <ProductCard key={id_producto} {...parametros}></ProductCard></Link> )}
-            
-                
-            
-        </section>
-        <div className={style.buttons}>
-                <button disabled={atrasButtonIsDisabled} onClick={handlerAtrasButtonClick} >Atras</button >
-                <button disabled={adelanteButtonIsDisabled} onClick={handlerAdelanteButtonClick}>adelante</button>
-        </div>
+        <div className={style.container}>
+            <section className={style.products}>
+                {productos.map(({id_producto,...parametros}) => (
+                    <Link to={`/producto/${id_producto}`} key={id_producto}>
+                        <ProductCard {...parametros}></ProductCard>
+                    </Link>
+                ))}
+            </section>
+            <div className={style.pagination}>
+                <button className={style.paginationBtn} disabled={atrasButtonIsDisabled} onClick={handlerAtrasButtonClick}>Atrás</button>
+                <button className={style.paginationBtn} disabled={adelanteButtonIsDisabled} onClick={handlerAdelanteButtonClick}>Adelante</button>
+            </div>
         </div>
         
     )

@@ -12,7 +12,7 @@ function CarritoPage(){
         try{ 
             const id_cliente = JSON.parse(localStorage.getItem("user")).id_cliente
             const token = localStorage.getItem("token");
-            const response = await fetch("http://localhost:3000/carrito/eliminarDeCarrito",{
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/carrito/eliminarDeCarrito`,{
             method: "POST",
             headers:{
                 "content-type":"application/json",
@@ -42,7 +42,7 @@ function CarritoPage(){
     let totalPrice=0;
     const getCartProducts = async(id_cliente)=>{
         const token = localStorage.getItem("token");
-        const request = await fetch(`http://localhost:3000/carrito/getCartProducts/${id_cliente}`, {
+        const request = await fetch(`${import.meta.env.VITE_API_URL}/carrito/getCartProducts/${id_cliente}`, {
             headers: {
                 "Authorization": `Bearer ${token}`
             }
@@ -73,13 +73,13 @@ function CarritoPage(){
     return(
         
         
-        <section className= {style.section} >
-            <ProductCartList  eliminarProductoCarrito={eliminarProductoCarrito}   productsCart={productsCart}/>
-            <div >
-                <CartSummary productsCart={productsCart} setProductCart={setProductCart} {...{amount,totalPrice}}/>
+        <section className={style.section}>
+            <div className={style.cartListContainer}>
+                <ProductCartList eliminarProductoCarrito={eliminarProductoCarrito} productsCart={productsCart} />
             </div>
-
-
+            <div className={style.summaryContainer}>
+                <CartSummary productsCart={productsCart} setProductCart={setProductCart} {...{amount,totalPrice}} />
+            </div>
         </section>
 
         

@@ -24,7 +24,7 @@ function AdminPage() {
     const fetchTodasBoletas = async () => {
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch("http://localhost:3000/boleta/admin/todas", {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/boleta/admin/todas`, {
                 headers: { "Authorization": `Bearer ${token}` }
             });
             if (response.ok) {
@@ -39,7 +39,7 @@ function AdminPage() {
     const fetchTodosProductos = async () => {
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch("http://localhost:3000/producto/admin/todos", {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/producto/admin/todos`, {
                 headers: { "Authorization": `Bearer ${token}` }
             });
             if (response.ok) {
@@ -54,7 +54,7 @@ function AdminPage() {
     const cambiarEstadoBoleta = async (id_boleta, nuevoEstado) => {
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(`http://localhost:3000/boleta/admin/estado/${id_boleta}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/boleta/admin/estado/${id_boleta}`, {
                 method: "PUT",
                 headers: { 
                     "Content-Type": "application/json",
@@ -77,7 +77,7 @@ function AdminPage() {
         e.preventDefault();
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch("http://localhost:3000/producto/crear", {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/producto/crear`, {
                 method: "POST",
                 headers: { 
                     "Content-Type": "application/json",
@@ -105,7 +105,7 @@ function AdminPage() {
         
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(`http://localhost:3000/producto/eliminar/${id_producto}`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/producto/eliminar/${id_producto}`, {
                 method: "DELETE",
                 headers: { "Authorization": `Bearer ${token}` }
             });
