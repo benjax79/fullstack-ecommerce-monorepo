@@ -55,10 +55,10 @@ function HistoryPage() {
                 </div>
             ) : (
                 <div className={style.ordersList}>
-                    {boletas.map((boleta) => (
+                    {boletas.map((boleta, idx) => (
                         <div key={boleta.id_boleta} className={style.orderCard}>
                             <div className={style.orderHeader}>
-                                <span className={style.orderId}>Pedido #{boleta.id_boleta}</span>
+                                <span className={style.orderId}>Pedido #{boletas.length - idx}</span>
                                 <span className={style.orderDate}>{new Date(boleta.fecha).toLocaleDateString()}</span>
                                 <span className={`${style.statusBadge} ${style[boleta.estado.toLowerCase()]}`}>
                                     {boleta.estado}

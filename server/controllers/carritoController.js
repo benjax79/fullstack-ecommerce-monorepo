@@ -2,7 +2,8 @@ import { pool } from "../config/db.js"
 
 export const agregarAlCarrito = async(req,res)=>{
     try{
-        const { id_cliente, id_producto, cantidad = 1 } = req.body;
+        const { id_producto, cantidad = 1 } = req.body;
+        const id_cliente = req.user.id_cliente;
         await pool.query(
             `INSERT INTO cliente_producto (id_cliente, id_producto, cantidad)
              VALUES ($1, $2, $3)
@@ -21,7 +22,8 @@ export const agregarAlCarrito = async(req,res)=>{
 
 export const eliminarDeCarrito = async (req,res)=>{
      try{
-        const {id_cliente,id_producto}= await req.body;
+        const {id_producto}= req.body;
+        const id_cliente = req.user.id_cliente;
         await pool.query("DELETE from cliente_producto WHERE id_cliente = $1 and id_producto = $2",[id_cliente,id_producto])
         res.send("Exito en la operacion")
     }   
@@ -34,7 +36,8 @@ export const eliminarDeCarrito = async (req,res)=>{
 
 export const getCartProducts = async(req,res)=>{
     try{
-        const {id_cliente}= await req.params;
+        // Ignoramos req.params.id_cliente y usamos la identidad del token
+        const id_cliente = req.user.id_cliente;
         const request =await pool.query("SELECT nombre,precio,imagen, p.id_producto,cp.cantidad FROM  cliente_producto AS cp JOIN producto as p ON cp.id_producto = p.id_producto WHERE id_cliente = $1",[id_cliente]);
         const products = request.rows; 
         res.json(products);
@@ -52,7 +55,8 @@ export const comprarCarrito = async(req,res) => {
     const client = await pool.connect(); // Obtener conexión dedicada para la transacción
     
     try{
-        const {id_cliente, productos, direccion_envio, metodo_pago} = req.body;
+        const { productos, direccion_envio, metodo_pago} = req.body;
+        const id_cliente = req.user.id_cliente;
         const clave_valor_list = productos.items;
         
         // ========== INICIAR TRANSACCIÓN ==========

@@ -1,6 +1,5 @@
 import styles from "./Header.module.css"
 import logo from "../../assets/logo.png"
-import cart from "../../assets/shoppingCartImg.png"
 import Searcher from "../Searcher/Searcher.jsx"
 import { Link } from "react-router-dom"
 import { useAuth } from "../../context/AuthContext.jsx";
@@ -15,9 +14,9 @@ function Header(){
 
     return (
         <header className = {styles.header}>
-            <div className={styles.logo}>
+            <Link to="/" className={styles.logo}>
                 <img  src={logo} alt="Logo image" />
-            </div>
+            </Link>
             <div className={styles.searcher}>
                 <Searcher  ></Searcher>
             </div>

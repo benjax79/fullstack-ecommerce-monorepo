@@ -1,31 +1,29 @@
 import {pool} from "../config/db.js";
 import bscrypt from "bcryptjs";
-import { configDotenv } from "dotenv";
 import jwt from "jsonwebtoken";
 
 
 
 
 export const register = async (req,res)=> {
-    
-    const {password,email,nombre,apellido}= req.body
-   
+    try {
+        const {password,email,nombre,apellido}= req.body
+        const query = await pool.query("SELECT * FROM cliente WHERE email = $1",[email]);
 
-    const query = await pool.query("SELECT * FROM cliente WHERE email = $1",[email]);
+        if(query.rows.length>0){
+            return res.send("Usuario ya registrado")
+        }
+        
+        const salt = await bscrypt.genSalt(10);
+        const hashedPassword = await bscrypt.hash(password,salt);
 
-    if(query.rows.length>0){
-        return res.send("Usuario ya registrado")
+        await pool.query("INSERT INTO cliente(nombre,apellido,email,password) VALUES ($1,$2,$3,$4) ",[nombre,apellido,email,hashedPassword]);
+
+        res.send(`Usuario ${nombre} ${apellido} creado correctamente con el email ${email}`);
+    } catch(error) {
+        console.error("Error al registrar:", error);
+        res.status(500).send("Error del servidor al registrar usuario");
     }
-    
-   
-
-    const salt = await bscrypt.genSalt(10);
-    const hashedPassword = await bscrypt.hash(password,salt);
-
-    await pool.query("INSERT INTO cliente(nombre,apellido,email,password) VALUES ($1,$2,$3,$4) ",[nombre,apellido,email,hashedPassword]);
-
-    res.send(`Usuario ${nombre} ${apellido} creado correctamente con el email ${email}`);
-
 }
 
 
@@ -55,6 +53,7 @@ export const login = async (req,res) => {
         }
     }
     catch(error){
-        console.error("Error inesperado",error)
+        console.error("Error inesperado en login:",error);
+        res.status(500).send("Error del servidor al iniciar sesión");
     }
 }
