@@ -49,48 +49,88 @@ export const getCartProducts = async(req,res)=>{
 }
 
 export const comprarCarrito = async(req,res) => {
-    // Crear boleta ( Recibimos la id_boleta ) -> Asociar cada producto con cantidad a boleta  ( id_boleta + id_producto + cantidad) * cada producto
-    // productos= {items: [{id_producto:IDREADL,precio:PRECIO REAL, cantidad:CANTIDAD REAL},{id_producto:IDREADL,precio:PRECIO REAL, cantidad:CANTIDAD REAL ...}]}
+    const client = await pool.connect(); // Obtener conexión dedicada para la transacción
+    
     try{
         const {id_cliente, productos, direccion_envio, metodo_pago} = req.body;
-        
-        // Calcular el precio total
         const clave_valor_list = productos.items;
+        
+        // ========== INICIAR TRANSACCIÓN ==========
+        await client.query("BEGIN");
+        
+        // 1. Validar stock de TODOS los productos antes de hacer cualquier cambio
+        for (const producto of clave_valor_list) {
+            const { id_producto, cantidad } = producto;
+            
+            // FOR UPDATE bloquea la fila para que nadie más la modifique hasta que termine la transacción
+            const stockCheck = await client.query(
+                "SELECT nombre, stock FROM producto WHERE id_producto = $1 FOR UPDATE",
+                [id_producto]
+            );
+            
+            if (stockCheck.rows.length === 0) {
+                await client.query("ROLLBACK");
+                return res.status(400).json({ 
+                    error: `El producto con ID ${id_producto} no existe.` 
+                });
+            }
+            
+            const { nombre, stock } = stockCheck.rows[0];
+            
+            if (stock < cantidad) {
+                await client.query("ROLLBACK");
+                return res.status(400).json({ 
+                    error: `Stock insuficiente de "${nombre}". Disponible: ${stock}, solicitado: ${cantidad}.` 
+                });
+            }
+        }
+        
+        // 2. Calcular el precio total
         let precio_total = 0;
         for (const producto of clave_valor_list) {
             precio_total += producto.precio * producto.cantidad;
         }
         
-        // Crear la boleta con el precio_total, direccion y metodo_pago
-        const resultBoleta = await pool.query(
-            "INSERT INTO boleta (id_cliente, precio_total, direccion_envio, metodo_pago) values ($1, $2, $3, $4) RETURNING id_boleta",
+        // 3. Crear la boleta
+        const resultBoleta = await client.query(
+            "INSERT INTO boleta (id_cliente, precio_total, direccion_envio, metodo_pago) VALUES ($1, $2, $3, $4) RETURNING id_boleta",
             [id_cliente, precio_total, direccion_envio, metodo_pago]
         );
         const id_boleta = resultBoleta.rows[0].id_boleta;
         
+        // 4. Insertar detalle de cada producto y descontar stock
         for (const producto of clave_valor_list){
-            const {id_producto,precio,cantidad} = producto;
-            await pool.query(`
-                            WITH insert_detalle AS (
-                                INSERT INTO boleta_producto (id_boleta, id_producto, precio_unidad, cantidad)
-                                VALUES ($1, $2, $3, $4)
-                                RETURNING id_producto, cantidad
-                            )
-                            UPDATE producto 
-                            SET stock = producto.stock - insert_detalle.cantidad
-                            FROM insert_detalle
-                            WHERE producto.id_producto = insert_detalle.id_producto
-                            RETURNING producto.stock AS stock_restante;`
-                            ,[id_boleta,id_producto,precio,cantidad]);
+            const {id_producto, precio, cantidad} = producto;
+            
+            // Insertar en boleta_producto
+            await client.query(
+                "INSERT INTO boleta_producto (id_boleta, id_producto, precio_unidad, cantidad) VALUES ($1, $2, $3, $4)",
+                [id_boleta, id_producto, precio, cantidad]
+            );
+            
+            // Descontar stock
+            await client.query(
+                "UPDATE producto SET stock = stock - $1 WHERE id_producto = $2",
+                [cantidad, id_producto]
+            );
         }
         
-        // Eliminar productos del carrito después de la compra
-        await pool.query("DELETE FROM cliente_producto WHERE id_cliente = $1", [id_cliente]);
+        // 5. Eliminar productos del carrito después de la compra
+        await client.query("DELETE FROM cliente_producto WHERE id_cliente = $1", [id_cliente]);
 
-        res.send("Exito en la compra")
+        // ========== CONFIRMAR TRANSACCIÓN ==========
+        await client.query("COMMIT");
+        
+        res.status(200).json({ mensaje: "¡Compra exitosa!", id_boleta });
     }
     catch(e){
-        console.error("Error durante compra",e)
-        res.status(500).send("Error durante la compra")
+        // ========== REVERTIR TODO SI ALGO FALLA ==========
+        await client.query("ROLLBACK");
+        console.error("Error durante compra:", e);
+        res.status(500).send("Error durante la compra");
+    }
+    finally {
+        // Siempre devolver la conexión al pool
+        client.release();
     }
 }

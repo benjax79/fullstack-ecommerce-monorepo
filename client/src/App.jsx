@@ -11,6 +11,7 @@ import HistoryPage from "./Pages/HistoryPage/HistoryPage.jsx";
 import AdminPage from "./Pages/AdminPage/AdminPage.jsx";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute.jsx";
 import AdminRoute from "./components/ProtectedRoute/AdminRoute.jsx";
+import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage.jsx";
 
 
 function App() {
@@ -42,6 +43,9 @@ function App() {
           <Route element={<AdminRoute />}>
              <Route path="/admin" element={<AdminPage/>}/>
           </Route>
+
+          {/* Ruta 404 - Catch all */}
+          <Route path="*" element={<NotFoundPage />} />
 
         </Route>
 
