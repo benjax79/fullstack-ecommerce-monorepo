@@ -9,7 +9,7 @@ function LoginPage(){
    
     const navigate = useNavigate();
     const {user,login,logOut}= useAuth();
-    const [loginFail, setLoginFail]= useState(false)
+    const [loginError, setLoginError]= useState(null)
     const [email,setEmail]=useState("");
     const [password,setPassword]= useState("");
 
@@ -23,20 +23,19 @@ function LoginPage(){
     }
     const handleLogin= async(event)=>{
         event.preventDefault()
-        const resultStatus= await login(email,password) ;
+        const result = await login(email,password) ;
 
-        if(resultStatus){
-            setLoginFail(false);
+        if(result.success){
+            setLoginError(null);
             navigate('/');
         }
         else{
-            setLoginFail(true);
+            setLoginError(result.error);
+            // El mensaje desaparecerá después de 5 segundos
             setTimeout(() => {
-               setLoginFail(false) 
-            },2500 );
+               setLoginError(null) 
+            }, 5000 );
         }
-
-
     }
     const handleCloseSession=()=>{
         logOut();
@@ -93,7 +92,7 @@ function LoginPage(){
                     </div>
                 </form>
                 
-                {loginFail && <p className={style.login_error_text}>Credenciales incorrectas</p>}
+                {loginError && <p className={style.login_error_text}>{loginError}</p>}
 
                 <button 
                     className={style.register_button}

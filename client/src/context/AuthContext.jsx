@@ -7,19 +7,32 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const login = async (email, password) => {
+        try {
+            const respuesta = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, { 
+                "method": "POST", 
+                "headers": { "Content-Type": "application/json" }, 
+                "body": JSON.stringify({ "email": email, "password": password }) 
+            });
+            
+            const textData = await respuesta.text();
+            let datos;
+            try {
+                datos = JSON.parse(textData);
+            } catch (e) {
+                datos = { error: textData }; // Si no es JSON, asume que el texto es el error
+            }
 
-        const respuesta = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, { "method": "POST", "headers": { "Content-Type": "application/json" }, "body": JSON.stringify({ "email": email, "password": password }) });
-        if (!respuesta.ok) {
-            return false;
+            if (!respuesta.ok) {
+                return { success: false, error: datos.error || "Error al iniciar sesión" };
+            }
+
+            localStorage.setItem("token", datos.token);
+            localStorage.setItem("user", JSON.stringify(datos.user));
+            setUser(datos.user);
+            return { success: true };
+        } catch (error) {
+            return { success: false, error: "Error de conexión con el servidor" };
         }
-
-        const datos = await respuesta.json()
-
-        localStorage.setItem("token", datos.token);
-        localStorage.setItem("user", JSON.stringify(datos.user));
-        setUser(datos.user);
-        return true;
-
     }
 
     const logOut = () => {

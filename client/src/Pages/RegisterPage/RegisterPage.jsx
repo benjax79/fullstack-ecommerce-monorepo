@@ -41,6 +41,14 @@ function RegisterPage(){
                 return;
             }
 
+            // Si es 429, es el rate limit (demasiadas peticiones)
+            if (response.status === 429) {
+                const errorData = await response.json();
+                setRegisterStatus("error");
+                setErrorMessage(errorData.error);
+                return;
+            }
+
             const data = await response.text();
 
             // Si el backend devuelve el string directo (ej. cuando el email ya existe en DB)
