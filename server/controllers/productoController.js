@@ -141,3 +141,28 @@ export const deleteProduct = async (req, res) => {
         res.status(500).send("Error del servidor al eliminar producto");
     }
 };
+
+// ADMIN: Actualizar producto existente
+export const updateProduct = async (req, res) => {
+    try {
+        const { id_producto } = req.params;
+        const { nombre, categoria, color, stock, precio, descripcion, imagen } = req.body;
+        
+        const query = await pool.query(
+            `UPDATE producto 
+             SET nombre = $1, categoria = $2, color = $3, stock = $4, precio = $5, descripcion = $6, imagen = $7 
+             WHERE id_producto = $8 
+             RETURNING *`,
+            [nombre, categoria, color, stock, precio, descripcion, imagen, id_producto]
+        );
+        
+        if (query.rows.length === 0) {
+            return res.status(404).send("Producto no encontrado");
+        }
+        
+        res.status(200).json(query.rows[0]);
+    } catch (error) {
+        console.error("Error al actualizar producto:", error);
+        res.status(500).send("Error del servidor al actualizar producto");
+    }
+};

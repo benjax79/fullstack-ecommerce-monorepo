@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getItemById, getGroupedItems, getSearchedItems, getAllColors, getAllCategories, createProduct, getAllProductsAdmin, deleteProduct } from "../controllers/productoController.js";
+import { getItemById, getGroupedItems, getSearchedItems, getAllColors, getAllCategories, createProduct, getAllProductsAdmin, deleteProduct, updateProduct } from "../controllers/productoController.js";
 import { verifyToken } from "../middlewares/verifyToken.js";
 import { verifyAdmin } from "../middlewares/verifyAdmin.js";
 
@@ -15,4 +15,5 @@ routerProducto.get("/", getGroupedItems);
 routerProducto.get("/admin/todos", verifyToken, verifyAdmin, getAllProductsAdmin);
 routerProducto.post("/crear", verifyToken, verifyAdmin, createProduct);
 routerProducto.delete("/eliminar/:id_producto", verifyToken, verifyAdmin, deleteProduct);
+routerProducto.put("/editar/:id_producto", verifyToken, verifyAdmin, updateProduct);
 

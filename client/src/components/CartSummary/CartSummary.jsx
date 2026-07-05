@@ -1,13 +1,14 @@
 import style from "./CartSummary.module.css"
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function CartSummary ({productsCart,amount,totalPrice,setProductCart}){
 
     const navigate = useNavigate();
 
     const comprar_ahora = () =>{
-        if(productsCart.length === 0){
-            alert("El carrito está vacío");
+        if (productsCart.length === 0) {
+            toast.error("El carrito está vacío");
             return;
         }
         

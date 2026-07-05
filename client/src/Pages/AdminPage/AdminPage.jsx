@@ -1,6 +1,7 @@
 import style from "./AdminPage.module.css";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext.jsx";
+import toast from "react-hot-toast";
 
 function AdminPage() {
     const { user } = useAuth();
@@ -12,6 +13,7 @@ function AdminPage() {
     const [nuevoProducto, setNuevoProducto] = useState({
         nombre: "", categoria: "", color: "", stock: 0, precio: 0, descripcion: "", imagen: ""
     });
+    const [editingProductId, setEditingProductId] = useState(null);
 
     useEffect(() => {
         if (activeTab === "ordenes") {
@@ -65,8 +67,9 @@ function AdminPage() {
 
             if (response.ok) {
                 setBoletas(boletas.map(b => b.id_boleta === id_boleta ? { ...b, estado: nuevoEstado } : b));
+                toast.success("Estado actualizado");
             } else {
-                alert("Fallo al actualizar el estado");
+                toast.error("Fallo al actualizar el estado");
             }
         } catch (error) {
             console.error("Error", error);
@@ -77,8 +80,14 @@ function AdminPage() {
         e.preventDefault();
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/producto/crear`, {
-                method: "POST",
+            
+            const isEditing = editingProductId !== null;
+            const url = isEditing 
+                ? `${import.meta.env.VITE_API_URL}/producto/editar/${editingProductId}`
+                : `${import.meta.env.VITE_API_URL}/producto/crear`;
+            
+            const response = await fetch(url, {
+                method: isEditing ? "PUT" : "POST",
                 headers: { 
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}` 
@@ -87,17 +96,42 @@ function AdminPage() {
             });
 
             if (response.ok) {
-                alert("Producto creado exitosamente");
+                if (isEditing) {
+                    toast.success("Producto actualizado exitosamente");
+                } else {
+                    toast.success("Producto creado exitosamente");
+                }
                 setNuevoProducto({
                     nombre: "", categoria: "", color: "", stock: 0, precio: 0, descripcion: "", imagen: ""
                 });
+                setEditingProductId(null);
                 fetchTodosProductos(); // Recargar lista
             } else {
-                alert("Error al crear producto");
+                toast.error(isEditing ? "Error al actualizar producto" : "Error al crear producto");
             }
         } catch (error) {
             console.error("Error", error);
         }
+    };
+
+    const iniciarEdicion = (producto) => {
+        setNuevoProducto({
+            nombre: producto.nombre,
+            categoria: producto.categoria,
+            color: producto.color,
+            stock: producto.stock,
+            precio: producto.precio,
+            descripcion: producto.descripcion,
+            imagen: producto.imagen
+        });
+        setEditingProductId(producto.id_producto);
+    };
+
+    const cancelarEdicion = () => {
+        setNuevoProducto({
+            nombre: "", categoria: "", color: "", stock: 0, precio: 0, descripcion: "", imagen: ""
+        });
+        setEditingProductId(null);
     };
 
     const eliminarProducto = async (id_producto) => {
@@ -112,9 +146,9 @@ function AdminPage() {
 
             if (response.ok) {
                 setProductos(productos.filter(p => p.id_producto !== id_producto));
-                alert("Producto eliminado exitosamente");
+                toast.success("Producto eliminado exitosamente");
             } else {
-                alert("Error al eliminar producto");
+                toast.error("Error al eliminar producto");
             }
         } catch (error) {
             console.error("Error", error);
@@ -199,7 +233,7 @@ function AdminPage() {
                 <div className={style.panel}>
                     <div className={style.productManagementGrid}>
                         <div>
-                            <h3>Crear Nuevo Producto</h3>
+                            <h3>{editingProductId ? `Editando: ${nuevoProducto.nombre || "Producto"}` : "Crear Nuevo Producto"}</h3>
                             <form className={style.productForm} onSubmit={handleProductSubmit}>
                                 <div className={style.formGroup}>
                                     <label>Nombre:</label>
@@ -231,7 +265,16 @@ function AdminPage() {
                                     <label>Descripción:</label>
                                     <textarea required rows="3" value={nuevoProducto.descripcion} onChange={(e) => setNuevoProducto({...nuevoProducto, descripcion: e.target.value})}></textarea>
                                 </div>
-                                <button type="submit" className={style.submitBtn}>Crear Producto Público</button>
+                                <div style={{display: 'flex', gap: '10px'}}>
+                                    <button type="submit" className={style.submitBtn}>
+                                        {editingProductId ? "Guardar Cambios" : "Crear Producto Público"}
+                                    </button>
+                                    {editingProductId && (
+                                        <button type="button" className={style.cancelBtn} onClick={cancelarEdicion}>
+                                            Cancelar
+                                        </button>
+                                    )}
+                                </div>
                             </form>
                         </div>
                         
@@ -255,7 +298,13 @@ function AdminPage() {
                                                 <td>{p.nombre}</td>
                                                 <td>${p.precio}</td>
                                                 <td>{p.stock}</td>
-                                                <td>
+                                                <td style={{display: 'flex', gap: '5px'}}>
+                                                    <button 
+                                                        className={style.editBtn}
+                                                        onClick={() => iniciarEdicion(p)}
+                                                    >
+                                                        Editar
+                                                    </button>
                                                     <button 
                                                         className={style.deleteBtn}
                                                         onClick={() => eliminarProducto(p.id_producto)}

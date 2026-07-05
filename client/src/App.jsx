@@ -12,6 +12,7 @@ import AdminPage from "./Pages/AdminPage/AdminPage.jsx";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute.jsx";
 import AdminRoute from "./components/ProtectedRoute/AdminRoute.jsx";
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage.jsx";
+import { Toaster } from "react-hot-toast";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
   return(
 
     <BrowserRouter>
+      <Toaster position="top-right" toastOptions={{duration: 4000}} />
       <Routes >
 
         <Route  path='/' element={<Layout/>} >

@@ -1,6 +1,7 @@
 import style from "./CheckoutPage.module.css"
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 function CheckoutPage(){
     const location = useLocation();
@@ -65,8 +66,8 @@ function CheckoutPage(){
                 throw new Error("Error en el servidor al procesar la compra");
             }
             
-            alert("¡Compra exitosa! Tu pedido está en camino.");
-            navigate("/"); // Redirigir al home después de la compra
+            toast.success("¡Compra exitosa! Tu pedido está en camino.");
+            navigate("/mis-compras"); // Redirigir al historial después de la compra
             
         } catch (error) {
             console.error("Error al procesar la compra:", error);

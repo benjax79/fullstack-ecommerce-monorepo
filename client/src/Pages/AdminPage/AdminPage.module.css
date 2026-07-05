@@ -137,6 +137,38 @@
     color: white;
 }
 
+.editBtn {
+    background-color: var(--background-main);
+    color: #007bff;
+    border: 1px solid #007bff;
+    padding: 8px 15px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+.editBtn:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.cancelBtn {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 1.1rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 700;
+    margin-top: 10px;
+    transition: all 0.3s;
+}
+.cancelBtn:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+}
+
 /* Product Form */
 .productManagementGrid {
     display: grid;
