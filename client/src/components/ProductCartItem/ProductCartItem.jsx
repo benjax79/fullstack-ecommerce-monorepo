@@ -1,4 +1,4 @@
-import style from "./productCartItem.module.css"
+import style from "./ProductCartItem.module.css"
 
 function ProductCartItem({nombre,cantidad,precio,imagen,id_producto,eliminarProductoCarrito}){
 

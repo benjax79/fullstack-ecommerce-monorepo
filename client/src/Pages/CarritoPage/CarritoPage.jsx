@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import style from "./carritoPage.module.css"
+import style from "./CarritoPage.module.css"
 import ProductCartList from "../../components/ProductCartList/ProductCartList.jsx";
 import CartSummary from "../../components/CartSummary/CartSummary.jsx"
 
