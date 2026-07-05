@@ -7,6 +7,7 @@ export const usePagination = () => {
     
     const [productos,setProductos] = useState([]);
     const [offset,setoffset] = useState(0);
+    const [loading, setLoading] = useState(true);
     const [atrasButtonIsDisabled,setAtrasButtonIsDisabled] = useState(true);
     const [adelanteButtonIsDisabled,setAdelanteButtonIsDisabled] = useState(false);
     const LIMIT =12;
@@ -30,6 +31,7 @@ export const usePagination = () => {
     
  
     const cargarProductos=  async(newOffSet,textToSearch)=>{
+        setLoading(true);
         try{
 
             let datos;
@@ -83,6 +85,9 @@ export const usePagination = () => {
         catch(error){
             console.error("Error inesperado",error)
         }
+        finally {
+            setLoading(false);
+        }
         
     }
 
@@ -106,7 +111,8 @@ export const usePagination = () => {
             handlerAdelanteButtonClick,
             atrasButtonIsDisabled,
             adelanteButtonIsDisabled,
-            productos
+            productos,
+            loading
         }
         
     

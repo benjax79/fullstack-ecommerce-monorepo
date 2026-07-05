@@ -2,6 +2,7 @@ import style from "./HistoryPage.module.css";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
+import { OrderListSkeleton } from "../../components/Skeleton/Skeleton";
 
 function HistoryPage() {
     const { user } = useAuth();
@@ -41,7 +42,14 @@ function HistoryPage() {
     }, [user, navigate]);
 
     if (loading) {
-        return <h2 className={style.loading}>Cargando tu historial...</h2>;
+        return (
+            <section className={style.historyContainer}>
+                <h2 className={style.title}>Mis Compras</h2>
+                <div className={style.ordersList}>
+                    <OrderListSkeleton count={3} />
+                </div>
+            </section>
+        );
     }
 
     return (

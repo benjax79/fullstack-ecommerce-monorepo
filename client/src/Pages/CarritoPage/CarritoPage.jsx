@@ -2,10 +2,12 @@ import { useEffect, useState } from "react"
 import style from "./CarritoPage.module.css"
 import ProductCartList from "../../components/ProductCartList/ProductCartList.jsx";
 import CartSummary from "../../components/CartSummary/CartSummary.jsx"
+import { CartListSkeleton } from "../../components/Skeleton/Skeleton"
 
 function CarritoPage(){
     
     const [productsCart,setProductCart] = useState([]);
+    const [loading, setLoading] = useState(true);
 
 
     const eliminarProductoCarrito = async(id_producto) => {
@@ -58,12 +60,14 @@ function CarritoPage(){
 
     useEffect( ()=>{
         if(!localStorage.getItem("user")){
+            setLoading(false);
             return
         }
         
         const user=JSON.parse(localStorage.getItem("user"));
         const fecthData=async()=>{
             await getCartProducts(user.id_cliente)
+            setLoading(false);
         }
         fecthData();
        
@@ -75,7 +79,11 @@ function CarritoPage(){
         
         <section className={style.section}>
             <div className={style.cartListContainer}>
-                <ProductCartList eliminarProductoCarrito={eliminarProductoCarrito} productsCart={productsCart} />
+                {loading ? (
+                    <CartListSkeleton count={3} />
+                ) : (
+                    <ProductCartList eliminarProductoCarrito={eliminarProductoCarrito} productsCart={productsCart} />
+                )}
             </div>
             <div className={style.summaryContainer}>
                 <CartSummary productsCart={productsCart} setProductCart={setProductCart} {...{amount,totalPrice}} />

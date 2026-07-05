@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import style from "./Product.module.css"
 import { useParams, useNavigate } from "react-router-dom"
+import { ProductDetailSkeleton } from "../Skeleton/Skeleton"
 
 function Product(){
     let Params = useParams();
@@ -30,7 +31,7 @@ function Product(){
     },[addProductNotification] )
 
     if(!producto){
-        return <p>cargando</p>
+        return <ProductDetailSkeleton />
     }
 
     const agregarAlCarrito = async() => {

@@ -4,7 +4,7 @@ import Filter from "../../components/Filter/Filter.jsx";
 import ProductsContainer from "../../components/ProductsContainer/ProductsContainer.jsx";
 
 function ProductsPage() {
-    const { adelanteButtonIsDisabled, atrasButtonIsDisabled, handlerAdelanteButtonClick, handlerAtrasButtonClick, productos } = usePagination();
+    const { adelanteButtonIsDisabled, atrasButtonIsDisabled, handlerAdelanteButtonClick, handlerAtrasButtonClick, productos, loading } = usePagination();
 
     return (
         <div className={style.pageContainer}>
@@ -12,7 +12,7 @@ function ProductsPage() {
                 <Filter />
             </div>
             <div className={style.productsSection}>
-                <ProductsContainer {...{ adelanteButtonIsDisabled, atrasButtonIsDisabled, handlerAdelanteButtonClick, handlerAtrasButtonClick, productos }} />
+                <ProductsContainer {...{ adelanteButtonIsDisabled, atrasButtonIsDisabled, handlerAdelanteButtonClick, handlerAtrasButtonClick, productos, loading }} />
             </div>
         </div>
     )
