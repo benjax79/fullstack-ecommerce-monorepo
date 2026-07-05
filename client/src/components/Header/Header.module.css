@@ -1,13 +1,17 @@
 .header {
     background-color: var(--background-surface);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow-sm);
+}
+
+/* ── Barra superior (logo + buscador desktop + hamburguesa) ── */
+.topBar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 40px;
-    box-shadow: var(--shadow-sm);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
 }
 
 .logo img {
@@ -16,13 +20,47 @@
     object-fit: contain;
 }
 
-.searcher {
+.searcherDesktop {
     flex: 1;
     max-width: 600px;
     margin: 0 20px;
 }
 
-.navLinks {
+/* ── Hamburguesa (oculta en desktop) ── */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 1100;
+}
+
+.hamburgerLine {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background-color: var(--text-main);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+/* Animación de X cuando está abierto */
+.hamburgerLine.open:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+.hamburgerLine.open:nth-child(2) {
+    opacity: 0;
+}
+.hamburgerLine.open:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* ── Links de navegación DESKTOP ── */
+.navLinksDesktop {
     display: flex;
     align-items: center;
     gap: 30px;
@@ -77,23 +115,125 @@
     color: var(--primary-color);
 }
 
-/* Responsividad */
+/* ── Overlay oscuro (fondo detrás del panel) ── */
+.overlay {
+    display: none;
+}
+
+/* ── Panel lateral móvil (oculto en desktop) ── */
+.navPanel {
+    display: none;
+}
+
+.searcherMobile {
+    display: none;
+}
+
+/* ═══════════════ RESPONSIVIDAD MÓVIL ═══════════════ */
 @media (max-width: 768px) {
-    .header {
+    .topBar {
+        padding: 10px 15px;
+    }
+
+    .logo img {
+        height: 45px;
+    }
+
+    /* Ocultar buscador y navLinks de desktop */
+    .searcherDesktop {
+        display: none;
+    }
+
+    .navLinksDesktop {
+        display: none;
+    }
+
+    /* Mostrar hamburguesa */
+    .hamburger {
+        display: flex;
+    }
+
+    /* Overlay */
+    .overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1050;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .overlayVisible {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Panel lateral deslizable */
+    .navPanel {
+        display: flex;
         flex-direction: column;
-        padding: 15px;
-        gap: 15px;
+        position: fixed;
+        top: 0;
+        right: -280px;
+        width: 280px;
+        height: 100vh;
+        background-color: var(--background-surface);
+        z-index: 1060;
+        padding: 80px 25px 30px;
+        gap: 5px;
+        box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+        transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
     }
 
-    .searcher {
-        width: 100%;
-        max-width: none;
-        margin: 0;
+    .navPanelOpen {
+        right: 0;
     }
 
-    .navLinks {
-        width: 100%;
-        justify-content: space-between;
-        gap: 10px;
+    /* Buscador dentro del menú móvil */
+    .searcherMobile {
+        display: block;
+        margin-bottom: 15px;
+    }
+
+    /* Links dentro del panel */
+    .navItem {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 16px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: var(--text-main);
+        text-decoration: none;
+        border-radius: var(--radius-sm);
+        transition: all 0.2s ease;
+    }
+
+    .navItem:hover {
+        background-color: var(--secondary-color);
+        color: var(--primary-color);
+    }
+
+    .navItemLogin {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14px 16px;
+        margin-top: 15px;
+        font-size: 1rem;
+        font-weight: 700;
+        color: white;
+        text-decoration: none;
+        background-color: var(--primary-color);
+        border-radius: var(--radius-lg);
+        transition: all 0.3s ease;
+    }
+
+    .navItemLogin:hover {
+        background-color: var(--primary-hover);
+        transform: translateY(-2px);
     }
 }
