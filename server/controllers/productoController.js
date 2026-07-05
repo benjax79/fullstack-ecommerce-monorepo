@@ -20,7 +20,8 @@ export const getGroupedItems = async (req,res) =>{
     res.json(result); // Array de jsons
     }
     catch(error){
-        res.send(console.error("Error terrible"),error)
+        console.error("Error al obtener productos:", error);
+        res.status(500).send("Error del servidor al obtener productos");
     }
     
     
@@ -75,19 +76,12 @@ export const getSearchedItems = async (req,res) => {
         const query = await pool.query(consulta_lista,parametros); 
 
 
-        /*
-        if (color){
-            query =  await pool.query("SELECT id_producto,nombre,precio,stock,imagen FROM producto WHERE nombre ilike $3 and color = $4 ORDER BY precio LIMIT $1 OFFSET $2",[limit,offset,petition,color]);
-        }
-        else{
-            query =  await pool.query("SELECT id_producto,nombre,precio,stock,imagen FROM producto WHERE nombre ilike $3 ORDER BY precio LIMIT $1 OFFSET $2",[limit,offset,petition]);
-        }
-        */
         const result = query.rows;
         res.json(result);
     }
     catch(error){
-        res.send(console.error("Error terrible"),error)
+        console.error("Error al buscar productos:", error);
+        res.status(500).send("Error del servidor al buscar productos");
     }
 }
 

@@ -46,11 +46,3 @@ CREATE Table boleta_producto(
     Foreign Key (id_boleta) REFERENCES boleta(id_boleta) ON DELETE CASCADE,
     Foreign Key (id_producto) REFERENCES producto(id_producto)
 )
-
-
-
-select * from boleta where id_cliente=19
-
-
-
-
