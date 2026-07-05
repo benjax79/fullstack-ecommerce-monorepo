@@ -16,7 +16,21 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Middlewares
-app.use(cors());
+// Configuración de CORS estricto
+const allowedOrigins = process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(',') : ['http://localhost:5173'];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Permitir peticiones sin origin (como cURL o Postman) o si el origin está en la lista permitida
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.warn(`Petición bloqueada por CORS desde el origen: ${origin}`);
+      callback(new Error('No autorizado por CORS'));
+    }
+  },
+  credentials: true // Permite envío de cookies/tokens si es necesario
+}));
 app.use(express.json());
 app.use("/conexion", routerConexion)
 app.use("/producto", routerProducto)
