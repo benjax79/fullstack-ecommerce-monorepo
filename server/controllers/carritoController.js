@@ -59,6 +59,45 @@ export const eliminarDeCarrito = async (req,res)=>{
     }
 }
 
+export const actualizarCantidad = async (req, res) => {
+    try {
+        const { id_producto, nueva_cantidad } = req.body;
+        const id_cliente = req.user.id_cliente;
+
+        if (nueva_cantidad <= 0) {
+            // Eliminar producto si la cantidad es 0 o menor
+            await pool.query("DELETE FROM cliente_producto WHERE id_cliente = $1 AND id_producto = $2", [id_cliente, id_producto]);
+            return res.status(200).send("Producto eliminado del carrito");
+        }
+
+        // Verificar stock actual del producto
+        const productCheck = await pool.query("SELECT stock, nombre FROM producto WHERE id_producto = $1", [id_producto]);
+        
+        if (productCheck.rows.length === 0) {
+            return res.status(404).json({ error: "Producto no encontrado" });
+        }
+        
+        const stock_disponible = productCheck.rows[0].stock;
+
+        // Validar si excede el stock
+        if (nueva_cantidad > stock_disponible) {
+            return res.status(400).json({ 
+                error: `No hay suficiente stock. Solo quedan ${stock_disponible} unidades disponibles.` 
+            });
+        }
+
+        await pool.query(
+            "UPDATE cliente_producto SET cantidad = $1 WHERE id_cliente = $2 AND id_producto = $3",
+            [nueva_cantidad, id_cliente, id_producto]
+        );
+        
+        res.status(200).send("Cantidad actualizada");
+    } catch (error) {
+        console.error("Error al actualizar cantidad", error);
+        res.status(500).send("Fallo al actualizar cantidad en el carrito");
+    }
+}
+
 export const getCartProducts = async(req,res)=>{
     try{
         // Ignoramos req.params.id_cliente y usamos la identidad del token

@@ -5,11 +5,11 @@ import ProductCartItem from "../ProductCartItem/ProductCartItem.jsx";
 
 
 
-function ProductCartList({productsCart ,eliminarProductoCarrito}){
+function ProductCartList({productsCart ,eliminarProductoCarrito, modificarCantidadCarrito}){
 
     
     const lista=productsCart.map( ({id_producto:key,...others}) =>{  
-                return <ProductCartItem  eliminarProductoCarrito={eliminarProductoCarrito} key={key} id_producto={key} {...others}/>
+                return <ProductCartItem  eliminarProductoCarrito={eliminarProductoCarrito} modificarCantidadCarrito={modificarCantidadCarrito} key={key} id_producto={key} {...others}/>
                   
     })
 

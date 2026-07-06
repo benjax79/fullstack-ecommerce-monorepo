@@ -4,6 +4,7 @@ import ProductCartList from "../../components/ProductCartList/ProductCartList.js
 import CartSummary from "../../components/CartSummary/CartSummary.jsx"
 import { CartListSkeleton } from "../../components/Skeleton/Skeleton"
 import { useCart } from "../../context/CartContext.jsx";
+import toast from "react-hot-toast";
 
 function CarritoPage(){
     
@@ -43,6 +44,44 @@ function CarritoPage(){
     } 
 
     
+    const modificarCantidadCarrito = async (id_producto, nueva_cantidad) => {
+        if (nueva_cantidad <= 0) {
+            return eliminarProductoCarrito(id_producto);
+        }
+
+        try {
+            const token = localStorage.getItem("token");
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/carrito/actualizarCantidad`, {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({ id_producto, nueva_cantidad })
+            });
+
+            if (!response.ok) {
+                const errData = await response.json();
+                toast.error(errData.error || "No se pudo actualizar la cantidad");
+                return;
+            }
+
+            // Update state
+            const updatedProducts = productsCart.map(prod => {
+                if (prod.id_producto === id_producto) {
+                    return { ...prod, cantidad: nueva_cantidad };
+                }
+                return prod;
+            });
+            setProductCart(updatedProducts);
+            refreshCartCount();
+
+        } catch (e) {
+            console.error("Error al actualizar cantidad", e);
+            toast.error("Error de conexión");
+        }
+    }
+
     let amount=0;
     let totalPrice=0;
     const getCartProducts = async(id_cliente)=>{
@@ -85,7 +124,7 @@ function CarritoPage(){
                 {loading ? (
                     <CartListSkeleton count={3} />
                 ) : (
-                    <ProductCartList eliminarProductoCarrito={eliminarProductoCarrito} productsCart={productsCart} />
+                    <ProductCartList eliminarProductoCarrito={eliminarProductoCarrito} modificarCantidadCarrito={modificarCantidadCarrito} productsCart={productsCart} />
                 )}
             </div>
             <div className={style.summaryContainer}>
