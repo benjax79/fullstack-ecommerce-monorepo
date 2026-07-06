@@ -85,7 +85,7 @@ Crea un archivo `.env` en la carpeta `server/` basándote en el archivo de ejemp
 ```env
 PORT=3000
 DB_USER=benja
-DB_PASSWORD=password123
+DB_PASSWORD=contraseña123
 DB_HOST=db
 DB_PORT=5432
 DB_NAME=tienda_db
@@ -109,6 +109,14 @@ docker-compose up -d --build
 - **Frontend:** `http://localhost:5173`
 - **Backend API:** `http://localhost:3000`
 - **PgAdmin (Gestor de BD):** `http://localhost:5050`
+
+### 3. Poblar la Base de Datos (Primer inicio)
+Como la base de datos de Docker inicia vacía, debes inyectar las tablas y los productos iniciales. Ejecuta estos dos comandos en tu terminal (en la raíz del proyecto):
+
+```bash
+docker exec -i postgres_tienda psql -U benja -d tienda_db < CreacionDB.sql
+docker exec -i postgres_tienda psql -U benja -d tienda_db < poblamiento.sql
+```
 
 ## 👨‍💻 Comandos de Desarrollo (Sin Docker)
 Si prefieres correrlo en modo desarrollo local para ver cambios en tiempo real:
