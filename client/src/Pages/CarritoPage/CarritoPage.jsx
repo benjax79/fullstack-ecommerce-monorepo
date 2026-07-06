@@ -3,11 +3,13 @@ import style from "./CarritoPage.module.css"
 import ProductCartList from "../../components/ProductCartList/ProductCartList.jsx";
 import CartSummary from "../../components/CartSummary/CartSummary.jsx"
 import { CartListSkeleton } from "../../components/Skeleton/Skeleton"
+import { useCart } from "../../context/CartContext.jsx";
 
 function CarritoPage(){
     
     const [productsCart,setProductCart] = useState([]);
     const [loading, setLoading] = useState(true);
+    const { refreshCartCount } = useCart();
 
 
     const eliminarProductoCarrito = async(id_producto) => {
@@ -33,6 +35,7 @@ function CarritoPage(){
         }
         const filtraje= productsCart.filter( (producto) => producto.id_producto !==id_producto)
         setProductCart(filtraje)
+        refreshCartCount();
         }
         catch (e) {
             console.error("Error al eliminar de carrito",e)

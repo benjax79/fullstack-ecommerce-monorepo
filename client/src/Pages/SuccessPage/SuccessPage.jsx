@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import style from "./SuccessPage.module.css";
 import toast from "react-hot-toast";
+import { useCart } from "../../context/CartContext.jsx";
 
 function SuccessPage() {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const session_id = searchParams.get("session_id");
+    const { refreshCartCount } = useCart();
     
     const [status, setStatus] = useState("verifying"); // 'verifying', 'success', 'error'
 
@@ -44,6 +46,7 @@ function SuccessPage() {
                             localStorage.removeItem("pendingOrder"); // Limpiamos temporal
                             setStatus("success");
                             toast.success("¡Pago verificado y boleta generada!");
+                            refreshCartCount(); // Resetea el contador del carrito
                             
                             // Redirigir al historial después de 3 segundos
                             setTimeout(() => navigate("/mis-compras"), 3000);

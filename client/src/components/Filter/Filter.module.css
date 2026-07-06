@@ -7,6 +7,10 @@
     display: flex;
     flex-direction: column;
     gap: 25px;
+    position: sticky;
+    top: 140px; /* Para no chocar con el navbar que también es sticky */
+    max-height: calc(100vh - 160px);
+    overflow-y: auto;
 }
 
 .precio_maximo p, .titulo_lista {

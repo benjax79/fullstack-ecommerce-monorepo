@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import style from "./Product.module.css"
 import { useParams, useNavigate } from "react-router-dom"
 import { ProductDetailSkeleton } from "../Skeleton/Skeleton"
+import { useCart } from "../../context/CartContext.jsx";
 
 function Product(){
     let Params = useParams();
@@ -12,6 +13,7 @@ function Product(){
     const [cantidad, setCantidad] = useState(1);
     const [addProductNotification,setAddProductNotification ] = useState(false)
     const [errorNotification, setErrorNotification] = useState("");
+    const { refreshCartCount } = useCart();
     
     const loadProduct = async() =>{
         const data = await fetch(`${import.meta.env.VITE_API_URL}/producto/${id}`);
@@ -77,6 +79,7 @@ function Product(){
                 return;
             }
             setAddProductNotification(true);
+            refreshCartCount();
         }
         catch (e) {
             console.error("Error al agregar al carrito",e)

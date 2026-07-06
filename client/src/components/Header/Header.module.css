@@ -101,6 +101,28 @@
     color: var(--primary-color) !important;
 }
 
+.shoppingCartContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.cartBadge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none; /* So it doesn't block clicks */
+}
+
 .login {
     font-weight: 600;
     padding: 8px 16px;
