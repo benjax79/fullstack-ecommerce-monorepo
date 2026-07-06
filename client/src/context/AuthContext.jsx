@@ -5,7 +5,26 @@ import { useContext, createContext } from "react";
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+    const isTokenValid = (token) => {
+        try {
+            const payloadBase64 = token.split('.')[1];
+            const decodedJson = JSON.parse(atob(payloadBase64));
+            return decodedJson.exp * 1000 > Date.now();
+        } catch (e) {
+            return false;
+        }
+    };
+
+    const [user, setUser] = useState(() => {
+        const storedUser = localStorage.getItem("user");
+        const token = localStorage.getItem("token");
+        
+        if (storedUser && token && isTokenValid(token)) {
+            return JSON.parse(storedUser);
+        }
+        return null;
+    });
+
     const login = async (email, password) => {
         try {
             const respuesta = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, { 
@@ -45,20 +64,6 @@ export const AuthProvider = ({ children }) => {
 
     }
 
-
-    // Función auxiliar para comprobar si el token expiró
-    const isTokenValid = (token) => {
-        try {
-            // El token tiene formato: header.payload.signature
-            const payloadBase64 = token.split('.')[1];
-            // Decodificamos el Base64 y lo pasamos a JSON
-            const decodedJson = JSON.parse(atob(payloadBase64));
-            // decodedJson.exp está en segundos, Date.now() en milisegundos
-            return decodedJson.exp * 1000 > Date.now();
-        } catch (e) {
-            return false;
-        }
-    };
 
     // Carga inicial de datos (Con manejo de expiración de token)
     useEffect(() => {

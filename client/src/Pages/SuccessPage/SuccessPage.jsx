@@ -87,6 +87,9 @@ function SuccessPage() {
                     <h2>¡Pago Exitoso!</h2>
                     <p>Gracias por tu compra en Pinky Cosmetics.</p>
                     <p className={style.redirectText}>Serás redirigido a tu historial en unos segundos...</p>
+                    <div className={style.progressBarContainer}>
+                        <div className={style.progressBar}></div>
+                    </div>
                 </div>
             )}
 
