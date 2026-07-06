@@ -24,5 +24,28 @@ services:
     depends_on:
       - db
 
+  backend:
+    build: ./server
+    container_name: backend_tienda
+    restart: always
+    env_file:
+      - ./server/.env
+    environment:
+      # Sobreescribimos el DB_HOST para que apunte al contenedor db en lugar de localhost
+      - DB_HOST=db
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  frontend:
+    build: ./client
+    container_name: frontend_tienda
+    restart: always
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
 volumes:
   postgres_data:
