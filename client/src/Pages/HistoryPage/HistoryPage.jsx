@@ -1,7 +1,7 @@
 import style from "./HistoryPage.module.css";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext.jsx";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { OrderListSkeleton } from "../../components/Skeleton/Skeleton";
 
 function HistoryPage() {
@@ -82,6 +82,28 @@ function HistoryPage() {
                                     <span className={style.totalAmount}>${boleta.precio_total}</span>
                                 </div>
                             </div>
+                            
+                            {/* Nueva sección: Lista de Productos */}
+                            {boleta.productos && boleta.productos.length > 0 && (
+                                <div className={style.productsList}>
+                                    <h4>Productos en este pedido:</h4>
+                                    {boleta.productos.map((prod) => (
+                                        <div key={prod.id_producto} className={style.productItem}>
+                                            <Link to={`/producto/${prod.id_producto}`} className={style.productImage}>
+                                                <img src={prod.imagen || "/placeholder.jpg"} alt={prod.nombre} />
+                                            </Link>
+                                            <div className={style.productDetails}>
+                                                <Link to={`/producto/${prod.id_producto}`} className={style.titleLink}>
+                                                    <p className={style.productName}>{prod.nombre}</p>
+                                                </Link>
+                                                <p className={style.productPrice}>
+                                                    {prod.cantidad}x ${prod.precio_unidad}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     ))}
                 </div>

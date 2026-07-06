@@ -1,4 +1,5 @@
 import style from "./ProductCartItem.module.css"
+import { Link } from "react-router-dom";
 
 function ProductCartItem({nombre,cantidad,precio,imagen,id_producto,eliminarProductoCarrito}){
 
@@ -8,10 +9,14 @@ function ProductCartItem({nombre,cantidad,precio,imagen,id_producto,eliminarProd
     
     return (
         <div className={style.article}>
-            <img src={imagen} alt={nombre} className={style.image} />
+            <Link to={`/producto/${id_producto}`} className={style.imageLink}>
+                <img src={imagen} alt={nombre} className={style.image} />
+            </Link>
             
             <div className={style.div_info}>
-                <p className={style.title}>{nombre}</p> 
+                <Link to={`/producto/${id_producto}`} className={style.titleLink}>
+                    <p className={style.title}>{nombre}</p> 
+                </Link>
                 <p className={style.quantity}>Cantidad: {cantidad}</p>
                 <p className={style.price}>${precio*cantidad}</p>
             </div>

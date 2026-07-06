@@ -4,11 +4,27 @@ export const getBoletasByCliente = async (req, res) => {
     try {
         const { id_cliente } = req.params;
         
-        // Obtenemos todas las boletas del cliente ordenadas de la más nueva a la más antigua
-        const query = await pool.query(
-            "SELECT * FROM boleta WHERE id_cliente = $1 ORDER BY fecha DESC",
-            [id_cliente]
-        );
+        // Obtenemos todas las boletas del cliente con sus productos anidados usando json_agg
+        const query = await pool.query(`
+            SELECT b.*, 
+                COALESCE(
+                    json_agg(
+                        json_build_object(
+                            'id_producto', p.id_producto,
+                            'nombre', p.nombre,
+                            'imagen', p.imagen,
+                            'precio_unidad', bp.precio_unidad,
+                            'cantidad', bp.cantidad
+                        )
+                    ) FILTER (WHERE p.id_producto IS NOT NULL), '[]'
+                ) as productos
+            FROM boleta b
+            LEFT JOIN boleta_producto bp ON b.id_boleta = bp.id_boleta
+            LEFT JOIN producto p ON bp.id_producto = p.id_producto
+            WHERE b.id_cliente = $1
+            GROUP BY b.id_boleta
+            ORDER BY b.fecha DESC
+        `, [id_cliente]);
         
         const boletas = query.rows;
         res.status(200).json(boletas);
