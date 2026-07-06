@@ -87,14 +87,14 @@ export const getSearchedItems = async (req,res) => {
 
 
 export const getAllColors = async(req,res) =>{
-    const solicitud = "SELECT DISTINCT color from producto where stock > 0";
+    const solicitud = "SELECT DISTINCT color from producto where stock > 0 AND activo = true";
     let respuesta = await pool.query(solicitud)
     respuesta = respuesta.rows
     res.json(respuesta);
 }
 
 export const getAllCategories = async(req,res) =>{
-    const solicitud = "SELECT DISTINCT categoria from producto where stock > 0";
+    const solicitud = "SELECT DISTINCT categoria from producto where stock > 0 AND activo = true";
     let respuesta = await pool.query(solicitud)
     respuesta = respuesta.rows
     res.json(respuesta);

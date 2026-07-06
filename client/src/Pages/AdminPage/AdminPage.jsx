@@ -198,7 +198,7 @@ function AdminPage() {
                                         <td>#{b.id_boleta}</td>
                                         <td>{b.nombre} {b.apellido}</td>
                                         <td>{new Date(b.fecha).toLocaleDateString()}</td>
-                                        <td>${b.precio_total}</td>
+                                        <td>${Number(b.precio_total).toLocaleString("es-CL")}</td>
                                         <td>
                                             <span className={`${style.statusBadge} ${style[b.estado.toLowerCase()]}`}>
                                                 {b.estado}
@@ -296,7 +296,7 @@ function AdminPage() {
                                             <tr key={p.id_producto}>
                                                 <td><img src={p.imagen} alt={p.nombre} style={{width: '50px', height: '50px', objectFit: 'cover', borderRadius: '5px'}}/></td>
                                                 <td>{p.nombre}</td>
-                                                <td>${p.precio}</td>
+                                                <td>${Number(p.precio).toLocaleString("es-CL")}</td>
                                                 <td>{p.stock}</td>
                                                 <td style={{display: 'flex', gap: '5px'}}>
                                                     <button 

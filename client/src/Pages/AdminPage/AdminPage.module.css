@@ -176,6 +176,10 @@
     gap: 40px;
 }
 
+.productManagementGrid > div {
+    min-width: 0;
+}
+
 .productForm {
     display: flex;
     flex-direction: column;
