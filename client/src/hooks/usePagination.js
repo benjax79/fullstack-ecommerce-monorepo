@@ -19,11 +19,8 @@ export const usePagination = () => {
     const searchPrecio_minimo = urlSearchParams.get("precio_minimo");
     const searchOrden = urlSearchParams.get("orden"); // "ASC" o "DESC"
 
-    useEffect(  ()=>{
-      cargarProductos(0);
-    },[]);
-
     useEffect( () =>{
+        setoffset(0);
         cargarProductos(0,searchParam)
 
     },[searchParam,searchPrecio_maximo,searchPrecio_minimo,searchColor,searchCategoria,searchOrden] );

@@ -11,6 +11,14 @@ function Filter() {
     // Obtenemos los parámetros actuales de la URL de forma segura
     const searchParams = new URLSearchParams(localizacion.search);
     
+    // Mantenemos los parámetros pendientes en caso de múltiples clics rápidos (evita stale closure)
+    const pendingParams = useRef(new URLSearchParams(localizacion.search));
+    
+    useEffect(() => {
+        // Cada vez que la URL cambia oficialmente, actualizamos nuestra referencia
+        pendingParams.current = new URLSearchParams(localizacion.search);
+    }, [localizacion.search]);
+    
     const [coloresDisponibles, setColoresDisponibles] = useState([]);
     const [categoriasDisponibles, setCategoriasDisponibles] = useState([]);
 
@@ -41,7 +49,7 @@ function Filter() {
     const actualizarFiltro = (clave, valor) => {
         clearTimeout(timer.current);
         
-        const params = new URLSearchParams(localizacion.search);
+        const params = pendingParams.current;
         
         if (valor) {
             // Si el mismo valor ya estaba (ej. click en el mismo color), lo quitamos (toggle)
