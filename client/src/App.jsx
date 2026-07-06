@@ -13,6 +13,7 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute.jsx";
 import AdminRoute from "./components/ProtectedRoute/AdminRoute.jsx";
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage.jsx";
 import { Toaster } from "react-hot-toast";
+import SuccessPage from "./Pages/SuccessPage/SuccessPage.jsx";
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
             <Route path="/carrito" element={<CarritoPage/>} />
             <Route path="/checkout" element={<CheckoutPage/>}/> 
             <Route path="/mis-compras" element={<HistoryPage/>}/>
+            <Route path="/success" element={<SuccessPage/>}/>
           </Route>
           
           {/* Rutas de Administrador */}

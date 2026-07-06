@@ -35,6 +35,7 @@ function CheckoutPage(){
         try {
             const products_json_list = productsCart.map(prod => ({
                 id_producto: prod.id_producto,
+                nombre: prod.nombre,
                 precio: prod.precio,
                 cantidad: prod.cantidad
             }));
@@ -48,7 +49,7 @@ function CheckoutPage(){
                 return;
             }
             
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/carrito/comprarCarrito`,{
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/stripe/create-checkout-session`,{
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
@@ -57,8 +58,7 @@ function CheckoutPage(){
                 body: JSON.stringify({
                     id_cliente: id_cliente,
                     productos: { items: products_json_list },
-                    direccion_envio: direccion,
-                    metodo_pago: metodoPago
+                    direccion_envio: direccion
                 })
             });
             
@@ -66,8 +66,19 @@ function CheckoutPage(){
                 throw new Error("Error en el servidor al procesar la compra");
             }
             
-            toast.success("¡Compra exitosa! Tu pedido está en camino.");
-            navigate("/mis-compras"); // Redirigir al historial después de la compra
+            const session = await response.json();
+            
+            // Guardamos temporalmente los datos del carrito en localStorage
+            // para usarlos en SuccessPage cuando Stripe nos devuelva a la tienda
+            localStorage.setItem("pendingOrder", JSON.stringify({
+                id_cliente: id_cliente,
+                productos: { items: products_json_list },
+                direccion_envio: direccion,
+                metodo_pago: "Stripe"
+            }));
+
+            // Redirigimos a la pasarela de pago oficial de Stripe
+            window.location.href = session.url;
             
         } catch (error) {
             console.error("Error al procesar la compra:", error);
@@ -93,12 +104,8 @@ function CheckoutPage(){
 
                     <div className={style.inputGroup}>
                         <label>Método de Pago:</label>
-                        <select 
-                            value={metodoPago} 
-                            onChange={(e) => setMetodoPago(e.target.value)}
-                        >
-                            <option value="Tarjeta">Tarjeta de Crédito / Débito</option>
-                            <option value="Transferencia">Transferencia Bancaria</option>
+                        <select value="Tarjeta" disabled>
+                            <option value="Tarjeta">Tarjeta de Crédito / Débito (Stripe)</option>
                         </select>
                     </div>
 
