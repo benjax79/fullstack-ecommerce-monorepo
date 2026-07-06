@@ -8,6 +8,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 export const createCheckoutSession = async (req, res) => {
     try {
         const { productos } = req.body;
+        
+        // Obtenemos el origen de la petición para saber a dónde redirigir después de pagar
+        const origin = req.headers.origin || process.env.FRONTEND_URL.split(',')[0];
 
         // Stripe requiere que los productos tengan un formato específico (line_items)
         const lineItems = productos.items.map((item) => ({
@@ -28,8 +31,8 @@ export const createCheckoutSession = async (req, res) => {
             line_items: lineItems,
             mode: 'payment',
             // success_url recibe el ID de la sesión mágica para que el frontend lo verifique luego
-            success_url: `${process.env.FRONTEND_URL.split(',')[0]}/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${process.env.FRONTEND_URL.split(',')[0]}/checkout`,
+            success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${origin}/checkout`,
         });
 
         res.json({ id: session.id, url: session.url });
