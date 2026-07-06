@@ -1,0 +1,12 @@
+benjaminabde.dev {
+    # Redirigir todas las llamadas API al backend de Node.js
+    # handle_path remueve automáticamente el prefijo '/api' antes de enviarlo
+    handle_path /api/* {
+        reverse_proxy backend:3000
+    }
+
+    # Todo el resto del tráfico web (HTML, CSS, JS) va al contenedor del frontend
+    handle {
+        reverse_proxy frontend:5173
+    }
+}

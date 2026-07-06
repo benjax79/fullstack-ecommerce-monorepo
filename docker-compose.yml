@@ -33,8 +33,6 @@ services:
     environment:
       # Sobreescribimos el DB_HOST para que apunte al contenedor db en lugar de localhost
       - DB_HOST=db
-    ports:
-      - "3000:3000"
     depends_on:
       - db
 
@@ -42,10 +40,25 @@ services:
     build: ./client
     container_name: frontend_tienda
     restart: always
-    ports:
-      - "5173:5173"
     depends_on:
+      - backend
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: caddy_tienda
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - frontend
       - backend
 
 volumes:
   postgres_data:
+  caddy_data:
+  caddy_config:
