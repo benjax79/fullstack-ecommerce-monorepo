@@ -11,6 +11,7 @@ function Product(){
     const [producto,setProducto]= useState(null);
     const [cantidad, setCantidad] = useState(1);
     const [addProductNotification,setAddProductNotification ] = useState(false)
+    const [errorNotification, setErrorNotification] = useState("");
     
     const loadProduct = async() =>{
         const data = await fetch(`${import.meta.env.VITE_API_URL}/producto/${id}`);
@@ -29,6 +30,14 @@ function Product(){
             }, 5000);
         }
     },[addProductNotification] )
+
+    useEffect( ()=> {
+        if(errorNotification){
+            setTimeout(() => {
+                setErrorNotification("")
+            }, 5000);
+        }
+    },[errorNotification] )
 
     if(!producto){
         return <ProductDetailSkeleton />
@@ -59,7 +68,13 @@ function Product(){
             })
 
             if (!response.ok){
-                throw new Error(`Error en la petición: ${response.status}`);
+                if (response.status === 400) {
+                    const errData = await response.json();
+                    setErrorNotification(errData.error || "No hay suficiente stock.");
+                } else {
+                    setErrorNotification(`Error en la petición: ${response.status}`);
+                }
+                return;
             }
             setAddProductNotification(true);
         }
@@ -129,7 +144,7 @@ function Product(){
 
             <div className={style.contentRigth}>
                 <h1 className={style.title}>{producto.nombre}</h1>
-                <p className={style.price}>${producto.precio}</p>
+                <p className={style.price}>${Number(producto.precio).toLocaleString("es-CL")}</p>
                 
                 <div className={style.infoGroup}>
                     <span className={style.infoLabel}>Categoría</span>
@@ -174,6 +189,7 @@ function Product(){
                 </div>
                 
                 { addProductNotification && <div className={style.notification}>¡Producto agregado al carrito exitosamente!</div> }
+                { errorNotification && <div className={`${style.notification} ${style.errorNotification}`}>{errorNotification}</div> }
             </div>
         </article>
     )

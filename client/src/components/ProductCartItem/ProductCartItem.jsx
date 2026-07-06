@@ -18,7 +18,7 @@ function ProductCartItem({nombre,cantidad,precio,imagen,id_producto,eliminarProd
                     <p className={style.title}>{nombre}</p> 
                 </Link>
                 <p className={style.quantity}>Cantidad: {cantidad}</p>
-                <p className={style.price}>${precio*cantidad}</p>
+                <p className={style.price}>${Number(precio*cantidad).toLocaleString("es-CL")}</p>
             </div>
             
             <button onClick={()=>eliminarProductoCarrito(id_producto)} className={style.deleteButton}>

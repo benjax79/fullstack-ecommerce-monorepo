@@ -123,14 +123,14 @@ function CheckoutPage(){
                     {productsCart.map((prod, idx) => (
                         <div key={idx} className={style.summaryItem}>
                             <span>{prod.cantidad}x {prod.nombre}</span>
-                            <span>${prod.precio * prod.cantidad}</span>
+                            <span>${Number(prod.precio * prod.cantidad).toLocaleString("es-CL")}</span>
                         </div>
                     ))}
                 </div>
                 <hr className={style.divider} />
                 <div className={style.totalRow}>
                     <span>Total ({amount} artículos):</span>
-                    <span>${totalPrice}</span>
+                    <span>${Number(totalPrice).toLocaleString("es-CL")}</span>
                 </div>
             </div>
         </div>

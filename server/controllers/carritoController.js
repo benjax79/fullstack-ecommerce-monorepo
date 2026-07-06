@@ -4,6 +4,31 @@ export const agregarAlCarrito = async(req,res)=>{
     try{
         const { id_producto, cantidad = 1 } = req.body;
         const id_cliente = req.user.id_cliente;
+
+        // 1. Verificar stock actual del producto
+        const productCheck = await pool.query("SELECT stock, nombre FROM producto WHERE id_producto = $1", [id_producto]);
+        
+        if (productCheck.rows.length === 0) {
+            return res.status(404).json({ error: "Producto no encontrado" });
+        }
+        
+        const stock_disponible = productCheck.rows[0].stock;
+        
+        // 2. Verificar cuánto tiene ya el cliente en el carrito
+        const cartCheck = await pool.query(
+            "SELECT cantidad FROM cliente_producto WHERE id_cliente = $1 AND id_producto = $2", 
+            [id_cliente, id_producto]
+        );
+        
+        const cantidad_en_carrito = cartCheck.rows.length > 0 ? cartCheck.rows[0].cantidad : 0;
+        
+        // 3. Validar si excede el stock
+        if (cantidad_en_carrito + cantidad > stock_disponible) {
+            return res.status(400).json({ 
+                error: `No hay suficiente stock. Ya tienes ${cantidad_en_carrito} en el carrito y el stock total es ${stock_disponible}.` 
+            });
+        }
+
         await pool.query(
             `INSERT INTO cliente_producto (id_cliente, id_producto, cantidad)
              VALUES ($1, $2, $3)

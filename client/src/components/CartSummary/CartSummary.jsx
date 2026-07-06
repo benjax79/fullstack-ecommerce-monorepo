@@ -26,7 +26,7 @@ function CartSummary ({productsCart,amount,totalPrice,setProductCart}){
         <article className={style.article}>
             <p>Resumen de compra</p>
             <div className={style.list}>
-                <p>Productos({amount}) = $ {totalPrice}</p>
+                <p>Productos({amount}) = $ {Number(totalPrice).toLocaleString("es-CL")}</p>
                 
             </div >
             <button onClick={comprar_ahora} className={style.buyButton}>Comprar ahora</button>

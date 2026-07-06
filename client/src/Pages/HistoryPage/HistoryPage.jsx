@@ -79,7 +79,7 @@ function HistoryPage() {
                                 </div>
                                 <div className={style.orderTotal}>
                                     <p>Total Pagado</p>
-                                    <span className={style.totalAmount}>${boleta.precio_total}</span>
+                                    <span className={style.totalAmount}>${Number(boleta.precio_total).toLocaleString("es-CL")}</span>
                                 </div>
                             </div>
                             
@@ -97,7 +97,7 @@ function HistoryPage() {
                                                     <p className={style.productName}>{prod.nombre}</p>
                                                 </Link>
                                                 <p className={style.productPrice}>
-                                                    {prod.cantidad}x ${prod.precio_unidad}
+                                                    {prod.cantidad}x ${Number(prod.precio_unidad).toLocaleString("es-CL")}
                                                 </p>
                                             </div>
                                         </div>
